@@ -7,15 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		844C4813B873CA183FA08E75 /* Pods_BackUploadsWithAws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */; };
 		B1E325C42AB03AB1003BF87D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325C32AB03AB1003BF87D /* AppDelegate.swift */; };
 		B1E325C62AB03AB1003BF87D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325C52AB03AB1003BF87D /* SceneDelegate.swift */; };
 		B1E325C82AB03AB1003BF87D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325C72AB03AB1003BF87D /* ViewController.swift */; };
 		B1E325CB2AB03AB1003BF87D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E325C92AB03AB1003BF87D /* Main.storyboard */; };
 		B1E325CD2AB03AB1003BF87D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1E325CC2AB03AB1003BF87D /* Assets.xcassets */; };
 		B1E325D02AB03AB1003BF87D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E325CE2AB03AB1003BF87D /* LaunchScreen.storyboard */; };
+		B1E325D92AB03C5E003BF87D /* UploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325D82AB03C5E003BF87D /* UploadService.swift */; };
+		B1E325DE2AB03D0C003BF87D /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325DD2AB03D0C003BF87D /* TaskStatus.swift */; };
+		B1E325E02AB03DEC003BF87D /* UploadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325DF2AB03DEC003BF87D /* UploadFile.swift */; };
+		B1E325E32AB03FB9003BF87D /* S3Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E22AB03FB9003BF87D /* S3Keys.swift */; };
+		B1E325E52AB0421E003BF87D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E42AB0421E003BF87D /* Constants.swift */; };
+		B1E325E72AB0436B003BF87D /* UploadTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E62AB0436B003BF87D /* UploadTaskDelegate.swift */; };
+		B1E325E92AB0507B003BF87D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E82AB0507B003BF87D /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FEDDC2DAA64AB44339D42C3 /* Pods-BackUploadsWithAws.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackUploadsWithAws.release.xcconfig"; path = "Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws.release.xcconfig"; sourceTree = "<group>"; };
+		4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BackUploadsWithAws.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E325C02AB03AB1003BF87D /* BackUploadsWithAws.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BackUploadsWithAws.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E325C32AB03AB1003BF87D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1E325C52AB03AB1003BF87D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +34,14 @@
 		B1E325CC2AB03AB1003BF87D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1E325CF2AB03AB1003BF87D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1E325D12AB03AB1003BF87D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1E325D82AB03C5E003BF87D /* UploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadService.swift; sourceTree = "<group>"; };
+		B1E325DD2AB03D0C003BF87D /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
+		B1E325DF2AB03DEC003BF87D /* UploadFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFile.swift; sourceTree = "<group>"; };
+		B1E325E22AB03FB9003BF87D /* S3Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Keys.swift; sourceTree = "<group>"; };
+		B1E325E42AB0421E003BF87D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B1E325E62AB0436B003BF87D /* UploadTaskDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTaskDelegate.swift; sourceTree = "<group>"; };
+		B1E325E82AB0507B003BF87D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D80E558B846F212976AB7F19 /* Pods-BackUploadsWithAws.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackUploadsWithAws.debug.xcconfig"; path = "Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +49,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844C4813B873CA183FA08E75 /* Pods_BackUploadsWithAws.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		066881B1E40A0A51FA9C3107 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D80E558B846F212976AB7F19 /* Pods-BackUploadsWithAws.debug.xcconfig */,
+				0FEDDC2DAA64AB44339D42C3 /* Pods-BackUploadsWithAws.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		331842078A715537327D0FD0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B1E325B72AB03AB0003BF87D = {
 			isa = PBXGroup;
 			children = (
 				B1E325C22AB03AB1003BF87D /* BackUploadsWithAws */,
 				B1E325C12AB03AB1003BF87D /* Products */,
+				066881B1E40A0A51FA9C3107 /* Pods */,
+				331842078A715537327D0FD0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +94,8 @@
 		B1E325C22AB03AB1003BF87D /* BackUploadsWithAws */ = {
 			isa = PBXGroup;
 			children = (
+				B1E325DB2AB03CC5003BF87D /* Core */,
+				B1E325DA2AB03C89003BF87D /* Domain */,
 				B1E325C32AB03AB1003BF87D /* AppDelegate.swift */,
 				B1E325C52AB03AB1003BF87D /* SceneDelegate.swift */,
 				B1E325C72AB03AB1003BF87D /* ViewController.swift */,
@@ -67,6 +107,51 @@
 			path = BackUploadsWithAws;
 			sourceTree = "<group>";
 		};
+		B1E325D72AB03C37003BF87D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B1E325D82AB03C5E003BF87D /* UploadService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B1E325DA2AB03C89003BF87D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B1E325DC2AB03CDB003BF87D /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		B1E325DB2AB03CC5003BF87D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B1E325E12AB03F81003BF87D /* Utils */,
+				B1E325D72AB03C37003BF87D /* Services */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B1E325DC2AB03CDB003BF87D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B1E325DD2AB03D0C003BF87D /* TaskStatus.swift */,
+				B1E325DF2AB03DEC003BF87D /* UploadFile.swift */,
+				B1E325E62AB0436B003BF87D /* UploadTaskDelegate.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B1E325E12AB03F81003BF87D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B1E325E22AB03FB9003BF87D /* S3Keys.swift */,
+				B1E325E42AB0421E003BF87D /* Constants.swift */,
+				B1E325E82AB0507B003BF87D /* Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B1E325D42AB03AB1003BF87D /* Build configuration list for PBXNativeTarget "BackUploadsWithAws" */;
 			buildPhases = (
+				0AAF74CC6CEA0BA64773DDFA /* [CP] Check Pods Manifest.lock */,
 				B1E325BC2AB03AB1003BF87D /* Sources */,
 				B1E325BD2AB03AB1003BF87D /* Frameworks */,
 				B1E325BE2AB03AB1003BF87D /* Resources */,
+				546348B20482FB16929F7F4D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,14 +220,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0AAF74CC6CEA0BA64773DDFA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BackUploadsWithAws-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		546348B20482FB16929F7F4D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B1E325BC2AB03AB1003BF87D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1E325E02AB03DEC003BF87D /* UploadFile.swift in Sources */,
+				B1E325D92AB03C5E003BF87D /* UploadService.swift in Sources */,
+				B1E325E72AB0436B003BF87D /* UploadTaskDelegate.swift in Sources */,
 				B1E325C82AB03AB1003BF87D /* ViewController.swift in Sources */,
 				B1E325C42AB03AB1003BF87D /* AppDelegate.swift in Sources */,
+				B1E325E92AB0507B003BF87D /* Extensions.swift in Sources */,
+				B1E325DE2AB03D0C003BF87D /* TaskStatus.swift in Sources */,
 				B1E325C62AB03AB1003BF87D /* SceneDelegate.swift in Sources */,
+				B1E325E32AB03FB9003BF87D /* S3Keys.swift in Sources */,
+				B1E325E52AB0421E003BF87D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +418,7 @@
 		};
 		B1E325D52AB03AB1003BF87D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D80E558B846F212976AB7F19 /* Pods-BackUploadsWithAws.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -295,6 +432,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,6 +448,7 @@
 		};
 		B1E325D62AB03AB1003BF87D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FEDDC2DAA64AB44339D42C3 /* Pods-BackUploadsWithAws.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -323,6 +462,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

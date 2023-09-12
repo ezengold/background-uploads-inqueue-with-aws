@@ -1,0 +1,6 @@
+framework module Pods_BackUploadsWithAws {
+  umbrella header "Pods-BackUploadsWithAws-umbrella.h"
+
+  export *
+  module * { export * }
+}

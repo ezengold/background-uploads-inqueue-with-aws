@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework
+${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework

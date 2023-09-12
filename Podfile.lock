@@ -1,0 +1,20 @@
+PODS:
+  - AWSCore (2.33.4)
+  - AWSS3 (2.33.4):
+    - AWSCore (= 2.33.4)
+
+DEPENDENCIES:
+  - AWSS3
+
+SPEC REPOS:
+  trunk:
+    - AWSCore
+    - AWSS3
+
+SPEC CHECKSUMS:
+  AWSCore: 83e3416d2224ba98b61d8eadcfcb1f90f48fab82
+  AWSS3: a0d31bc565dc8a6c5eaa756610ac15704c100674
+
+PODFILE CHECKSUM: d49d8c3b4d86b54c1ccf23291c95eeadcf388488
+
+COCOAPODS: 1.12.1
