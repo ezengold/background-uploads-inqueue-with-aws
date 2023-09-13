@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		844C4813B873CA183FA08E75 /* Pods_BackUploadsWithAws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */; };
-		B148370A2AB217FB007248BF /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B14837072AB217FB007248BF /* OpenSans-Regular.ttf */; };
+		B14162E12AB27E130095E986 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B14162E02AB27E130095E986 /* OpenSans-Regular.ttf */; };
+		B14162E42AB280090095E986 /* OngoingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14162E32AB280090095E986 /* OngoingsView.swift */; };
+		B14162E62AB2801D0095E986 /* OngoingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14162E52AB2801D0095E986 /* OngoingsViewModel.swift */; };
+		B14162E82AB2808C0095E986 /* Navigations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14162E72AB2808C0095E986 /* Navigations.swift */; };
 		B148370B2AB217FB007248BF /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B14837082AB217FB007248BF /* OpenSans-SemiBold.ttf */; };
 		B148370C2AB217FB007248BF /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B14837092AB217FB007248BF /* OpenSans-Bold.ttf */; };
 		B19465542AB06F8A00860FF7 /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19465532AB06F8A00860FF7 /* ChatFolder.swift */; };
@@ -33,7 +36,10 @@
 /* Begin PBXFileReference section */
 		0FEDDC2DAA64AB44339D42C3 /* Pods-BackUploadsWithAws.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackUploadsWithAws.release.xcconfig"; path = "Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws.release.xcconfig"; sourceTree = "<group>"; };
 		4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BackUploadsWithAws.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B14837072AB217FB007248BF /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		B14162E02AB27E130095E986 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		B14162E32AB280090095E986 /* OngoingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingsView.swift; sourceTree = "<group>"; };
+		B14162E52AB2801D0095E986 /* OngoingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingsViewModel.swift; sourceTree = "<group>"; };
+		B14162E72AB2808C0095E986 /* Navigations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigations.swift; sourceTree = "<group>"; };
 		B14837082AB217FB007248BF /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		B14837092AB217FB007248BF /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		B19465532AB06F8A00860FF7 /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
@@ -87,6 +93,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B14162E22AB27FD70095E986 /* Ongoings */ = {
+			isa = PBXGroup;
+			children = (
+				B14162E32AB280090095E986 /* OngoingsView.swift */,
+				B14162E52AB2801D0095E986 /* OngoingsViewModel.swift */,
+			);
+			path = Ongoings;
+			sourceTree = "<group>";
+		};
 		B19465512AB06E4100860FF7 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +132,7 @@
 		B1B706352AB20676008A1F35 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				B14162E22AB27FD70095E986 /* Ongoings */,
 				B1B706362AB206A3008A1F35 /* Chats */,
 			);
 			path = Presentation;
@@ -125,8 +141,8 @@
 		B1B706362AB206A3008A1F35 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
-				B1B706372AB206BA008A1F35 /* ChatsViewModel.swift */,
 				B1B706392AB206CB008A1F35 /* ChatsView.swift */,
+				B1B706372AB206BA008A1F35 /* ChatsViewModel.swift */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -142,8 +158,8 @@
 		B1B7063C2AB20DF9008A1F35 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				B14162E02AB27E130095E986 /* OpenSans-Regular.ttf */,
 				B14837092AB217FB007248BF /* OpenSans-Bold.ttf */,
-				B14837072AB217FB007248BF /* OpenSans-Regular.ttf */,
 				B14837082AB217FB007248BF /* OpenSans-SemiBold.ttf */,
 			);
 			path = Fonts;
@@ -225,6 +241,7 @@
 				B1E325E22AB03FB9003BF87D /* S3Keys.swift */,
 				B1E325E42AB0421E003BF87D /* Constants.swift */,
 				B1E325E82AB0507B003BF87D /* Extensions.swift */,
+				B14162E72AB2808C0095E986 /* Navigations.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -293,7 +310,7 @@
 				B1E325CD2AB03AB1003BF87D /* Assets.xcassets in Resources */,
 				B148370C2AB217FB007248BF /* OpenSans-Bold.ttf in Resources */,
 				B148370B2AB217FB007248BF /* OpenSans-SemiBold.ttf in Resources */,
-				B148370A2AB217FB007248BF /* OpenSans-Regular.ttf in Resources */,
+				B14162E12AB27E130095E986 /* OpenSans-Regular.ttf in Resources */,
 				B1E325CB2AB03AB1003BF87D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,6 +366,7 @@
 			files = (
 				B19465542AB06F8A00860FF7 /* ChatFolder.swift in Sources */,
 				B1E325E02AB03DEC003BF87D /* UploadFile.swift in Sources */,
+				B14162E62AB2801D0095E986 /* OngoingsViewModel.swift in Sources */,
 				B1E325D92AB03C5E003BF87D /* UploadService.swift in Sources */,
 				B1E325E72AB0436B003BF87D /* UploadTaskDelegate.swift in Sources */,
 				B1B706342AB1FD39008A1F35 /* UploadFileType.swift in Sources */,
@@ -356,6 +374,8 @@
 				B1E325C42AB03AB1003BF87D /* AppDelegate.swift in Sources */,
 				B1E325E92AB0507B003BF87D /* Extensions.swift in Sources */,
 				B1E325DE2AB03D0C003BF87D /* TaskStatus.swift in Sources */,
+				B14162E82AB2808C0095E986 /* Navigations.swift in Sources */,
+				B14162E42AB280090095E986 /* OngoingsView.swift in Sources */,
 				B1E325C62AB03AB1003BF87D /* SceneDelegate.swift in Sources */,
 				B1E325E32AB03FB9003BF87D /* S3Keys.swift in Sources */,
 				B1B7063A2AB206CB008A1F35 /* ChatsView.swift in Sources */,

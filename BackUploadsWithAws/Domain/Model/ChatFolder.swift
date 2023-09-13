@@ -9,5 +9,6 @@ import Foundation
 
 struct ChatFolder: Codable, Identifiable {
 	let id: String
+	let folderName: String
 	var contents: [ChatFile]
 }
