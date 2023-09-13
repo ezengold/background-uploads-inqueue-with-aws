@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "entypo_flash.pdf",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "entypo_flash 1.pdf",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "entypo_flash 2.pdf",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

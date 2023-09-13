@@ -15,7 +15,7 @@ struct UploadFile: Codable {
 	
 	var fileUrl: URL?
 	
-	var contentType: String
+	var contentType: UploadFileType
 	
 	var expiresAt: Date?
 	
