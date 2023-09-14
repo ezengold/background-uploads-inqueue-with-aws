@@ -9,9 +9,11 @@ import Foundation
 import UIKit
 
 class FolderDetailsViewModel: ObservableObject {
+
 	var host: FolderDetailsViewController
 	
 	init(host: UIViewController) {
+
 		guard host is FolderDetailsViewController else {
 			self.host = FolderDetailsViewController()
 			return

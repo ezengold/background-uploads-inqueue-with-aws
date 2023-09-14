@@ -10,9 +10,11 @@ import UIKit
 import SwiftUI
 
 class OngoingsViewModel: ObservableObject {
+
 	var host: OngoingsViewController
 	
 	init(host: UIViewController) {
+
 		guard host is OngoingsViewController else {
 			self.host = OngoingsViewController()
 			return

@@ -8,6 +8,7 @@
 import SwiftUI
 
 class OngoingsViewController: UIViewController {
+
 	var vm: OngoingsViewModel!
 	
 	override func viewDidLoad() {
@@ -38,6 +39,7 @@ class OngoingsViewController: UIViewController {
 }
 
 struct OngoingsView: View {
+
 	@StateObject var vm: OngoingsViewModel
 	
     var body: some View {
@@ -46,6 +48,7 @@ struct OngoingsView: View {
 }
 
 struct OngoingsView_Previews: PreviewProvider {
+
     static var previews: some View {
         OngoingsView(vm: OngoingsViewModel(host: UIViewController()))
     }

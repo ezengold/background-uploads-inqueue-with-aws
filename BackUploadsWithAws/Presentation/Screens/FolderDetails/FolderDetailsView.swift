@@ -43,6 +43,7 @@ class FolderDetailsViewController: UIViewController {
 }
 
 struct FolderDetailsView: View {
+
 	@StateObject var vm: FolderDetailsViewModel
 	
     var body: some View {
@@ -52,6 +53,7 @@ struct FolderDetailsView: View {
 }
 
 struct FolderDetailsView_Previews: PreviewProvider {
+
     static var previews: some View {
         FolderDetailsView(vm: FolderDetailsViewModel(host: UIViewController()))
     }

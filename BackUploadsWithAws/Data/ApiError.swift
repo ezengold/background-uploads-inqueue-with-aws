@@ -8,6 +8,7 @@
 import Foundation
 
 struct ApiError: Error {
+
 	let message: String
 	
 	var object: Any? = nil

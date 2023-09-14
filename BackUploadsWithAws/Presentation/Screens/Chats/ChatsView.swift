@@ -16,6 +16,7 @@ class ChatsViewController: UIViewController {
 	var vm: ChatsViewModel!
 
 	override func viewDidLoad() {
+
 		super.viewDidLoad()
 		
 		self.setupNavBar()
@@ -42,6 +43,7 @@ class ChatsViewController: UIViewController {
 	}
 	
 	private func setupNavBar() {
+
 		self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.appBoldFont(ofSize: 17)]
 		self.navigationItem.backButtonTitle = ""
 		self.navigationItem.backBarButtonItem?.tintColor = .appPrincipal
@@ -96,11 +98,13 @@ class ChatsViewController: UIViewController {
 	
 	@objc
 	func onViewUploads() {
+
 		self.showOngoingUploads()
 	}
 	
 	@objc
 	func onSearch() {
+
 		self.searchController.searchBar.becomeFirstResponder()
 	}
 }
@@ -108,19 +112,18 @@ class ChatsViewController: UIViewController {
 extension ChatsViewController: UISearchBarDelegate {
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+
 		searchBar.resignFirstResponder()
 	}
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
 		self.vm.keywords = searchText
-		
-		if searchText.isEmpty {
-			searchBar.resignFirstResponder()
-		}
 	}
 }
 
 struct ChatsView: View {
+
 	@StateObject var vm: ChatsViewModel
 	
 	var body: some View {
@@ -154,13 +157,14 @@ struct ChatsView: View {
 			.padding(.top, 20)
 			.padding(.bottom, 100)
 			.onAppear {
-				vm.filterData()
+				vm.fetchAllData()
 			}
 		}
 	}
 }
 
 struct ChatsView_Previews: PreviewProvider {
+
     static var previews: some View {
         ChatsView(vm: ChatsViewModel(host: UIViewController()))
     }
