@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		844C4813B873CA183FA08E75 /* Pods_BackUploadsWithAws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */; };
+		B101E2452AB3C54600744539 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101E2442AB3C54600744539 /* Helpers.swift */; };
+		B101E2472AB3CB1700744539 /* FetchAllFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101E2462AB3CB1700744539 /* FetchAllFolders.swift */; };
 		B14162E12AB27E130095E986 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B14162E02AB27E130095E986 /* OpenSans-Regular.ttf */; };
 		B14162E42AB280090095E986 /* OngoingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14162E32AB280090095E986 /* OngoingsView.swift */; };
 		B14162E62AB2801D0095E986 /* OngoingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14162E52AB2801D0095E986 /* OngoingsViewModel.swift */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		0FEDDC2DAA64AB44339D42C3 /* Pods-BackUploadsWithAws.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackUploadsWithAws.release.xcconfig"; path = "Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws.release.xcconfig"; sourceTree = "<group>"; };
 		4BD194678257ECD87683E56E /* Pods_BackUploadsWithAws.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BackUploadsWithAws.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B101E2442AB3C54600744539 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		B101E2462AB3CB1700744539 /* FetchAllFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAllFolders.swift; sourceTree = "<group>"; };
 		B14162E02AB27E130095E986 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		B14162E32AB280090095E986 /* OngoingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingsView.swift; sourceTree = "<group>"; };
 		B14162E52AB2801D0095E986 /* OngoingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingsViewModel.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 		B148C0812AB2FB3900048DCE /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				B101E2462AB3CB1700744539 /* FetchAllFolders.swift */,
 				B148C0822AB2FC1000048DCE /* SearchFolders.swift */,
 			);
 			path = UseCase;
@@ -295,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				B1E325E22AB03FB9003BF87D /* S3Keys.swift */,
+				B101E2442AB3C54600744539 /* Helpers.swift */,
 				B1E325E42AB0421E003BF87D /* Constants.swift */,
 				B1E325E82AB0507B003BF87D /* Extensions.swift */,
 				B14162E72AB2808C0095E986 /* Navigations.swift */,
@@ -425,6 +431,7 @@
 				B19465542AB06F8A00860FF7 /* ChatFolder.swift in Sources */,
 				B1E325E02AB03DEC003BF87D /* UploadFile.swift in Sources */,
 				B14162E62AB2801D0095E986 /* OngoingsViewModel.swift in Sources */,
+				B101E2472AB3CB1700744539 /* FetchAllFolders.swift in Sources */,
 				B1E325D92AB03C5E003BF87D /* UploadService.swift in Sources */,
 				B1E325E72AB0436B003BF87D /* UploadTaskDelegate.swift in Sources */,
 				B1B706342AB1FD39008A1F35 /* UploadFileType.swift in Sources */,
@@ -441,6 +448,7 @@
 				B1E325C62AB03AB1003BF87D /* SceneDelegate.swift in Sources */,
 				B148C0912AB31A3500048DCE /* FolderDetailsViewModel.swift in Sources */,
 				B1E325E32AB03FB9003BF87D /* S3Keys.swift in Sources */,
+				B101E2452AB3C54600744539 /* Helpers.swift in Sources */,
 				B148C0932AB31A4300048DCE /* FolderDetailsView.swift in Sources */,
 				B1B7063A2AB206CB008A1F35 /* ChatsView.swift in Sources */,
 				B1E325E52AB0421E003BF87D /* Constants.swift in Sources */,

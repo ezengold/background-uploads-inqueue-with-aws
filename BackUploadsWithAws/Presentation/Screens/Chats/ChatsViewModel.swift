@@ -9,9 +9,12 @@ import Foundation
 import UIKit
 
 class ChatsViewModel: ObservableObject {
+
 	var host: ChatsViewController
 	
 	// MARK: Use cases
+	var fetchFoldersUseCase = FetchAllFoldersUseCase(api: ChatFolderApi.shared)
+
 	var searchFoldersUseCase = SearchFoldersUseCase(api: ChatFolderApi.shared)
 	
 	@Published var keywords: String = "" {
@@ -20,7 +23,8 @@ class ChatsViewModel: ObservableObject {
 	
 	@Published var data: [ChatFolder] = []
 	
-	init(host: UIViewController) {		
+	init(host: UIViewController) {
+
 		guard host is ChatsViewController else {
 			self.host = ChatsViewController()
 			return
@@ -28,9 +32,10 @@ class ChatsViewModel: ObservableObject {
 		self.host = host as! ChatsViewController
 	}
 	
-	func filterData() {
+	func fetchAllData() {
+
 		Task {
-			let result = await searchFoldersUseCase.execute(with: keywords)
+			let result = await fetchFoldersUseCase.execute()
 			
 			switch result {
 			case .success(let matches):
@@ -47,7 +52,13 @@ class ChatsViewModel: ObservableObject {
 		}
 	}
 	
+	private func filterData() {
+
+		self.data = searchFoldersUseCase.execute(with: self.keywords)
+	}
+	
 	func viewDetails(of item: ChatFolder) {
+
 		self.host.showDetailsView(ofFolder: item)
 	}
 }

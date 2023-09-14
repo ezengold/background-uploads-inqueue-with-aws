@@ -27,12 +27,14 @@ class Toast: UIView {
 	}
 	
 	override func awakeFromNib() {
+
 		super.awakeFromNib()
 		
 		makeView()
 	}
 	
 	func makeView() {
+
 		let textStyle = NSMutableParagraphStyle()
 
 		textStyle.minimumLineHeight = 20
@@ -44,6 +46,7 @@ class Toast: UIView {
 	}
 	
 	static func xibView() -> Toast? {
+
 		let nib = UINib(nibName: "Toast", bundle: nil)
 		let xibView = nib.instantiate(withOwner: self, options: nil)[0] as? Toast
 		return xibView
@@ -53,6 +56,7 @@ class Toast: UIView {
 extension UIViewController {
 	
 	func toast(_ message: String, withFont font: UIFont? = nil) {
+
 		if message.isEmpty { return }
 
 		if let toastView = Toast.xibView() {
