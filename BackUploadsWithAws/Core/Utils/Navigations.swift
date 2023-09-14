@@ -13,8 +13,13 @@ extension UIViewController {
 	func showOngoingUploads() {
 		lazy var vc = OngoingsViewController()
 		vc.view.backgroundColor = .white
-		vc.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-		vc.navigationItem.backBarButtonItem?.tintColor = .appPrincipal
+		self.navigationController?.pushViewController(vc, animated: true)
+	}
+	
+	func showDetailsView(ofFolder folder: ChatFolder) {
+		lazy var vc = FolderDetailsViewController()
+		vc.folder = folder
+		vc.view.backgroundColor = .white
 		self.navigationController?.pushViewController(vc, animated: true)
 	}
 }

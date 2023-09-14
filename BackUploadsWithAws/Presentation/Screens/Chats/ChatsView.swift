@@ -42,6 +42,10 @@ class ChatsViewController: UIViewController {
 	}
 	
 	private func setupNavBar() {
+		self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.appBoldFont(ofSize: 17)]
+		self.navigationItem.backButtonTitle = ""
+		self.navigationItem.backBarButtonItem?.tintColor = .appPrincipal
+		
 		let uploadsIcon = UIButton(type: .custom)
 		uploadsIcon.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
 		uploadsIcon.setImage(UIImage(named: "upload-icon"), for: .normal)
@@ -140,15 +144,18 @@ struct ChatsView: View {
 					.background(Color.white)
 					.cornerRadius(7)
 					.clipped()
-					.shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 0)
+					.shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 1)
 					.onTapGesture {
-						//
+						vm.viewDetails(of: item)
 					}
 				}
 			}
 			.padding(.horizontal, 15)
 			.padding(.top, 20)
 			.padding(.bottom, 100)
+			.onAppear {
+				vm.filterData()
+			}
 		}
 	}
 }
