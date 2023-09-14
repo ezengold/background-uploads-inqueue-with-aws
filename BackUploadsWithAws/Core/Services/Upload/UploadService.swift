@@ -113,7 +113,7 @@ final class UploadService {
 					safeFileUrl,
 					bucket: S3Keys.shared.s3Bucket,
 					key: nextUploadFile.s3UploadKey,
-					contentType: nextUploadFile.contentType,
+					contentType: nextUploadFile.contentType.contentTypeOf(fileWithExtension: nextUploadFile.fileUrl?.pathExtension ?? ""),
 					expression: expression,
 					completionHandler: { task, error in
 						if error == nil {
