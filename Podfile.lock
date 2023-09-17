@@ -2,19 +2,31 @@ PODS:
   - AWSCore (2.33.4)
   - AWSS3 (2.33.4):
     - AWSCore (= 2.33.4)
+  - PryntTrimmerView (4.0.2)
+  - SteviaLayout (4.7.3)
+  - YPImagePicker (5.2.1):
+    - PryntTrimmerView (= 4.0.2)
+    - SteviaLayout (= 4.7.3)
 
 DEPENDENCIES:
   - AWSS3
+  - YPImagePicker
 
 SPEC REPOS:
   trunk:
     - AWSCore
     - AWSS3
+    - PryntTrimmerView
+    - SteviaLayout
+    - YPImagePicker
 
 SPEC CHECKSUMS:
   AWSCore: 83e3416d2224ba98b61d8eadcfcb1f90f48fab82
   AWSS3: a0d31bc565dc8a6c5eaa756610ac15704c100674
+  PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
+  SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: d49d8c3b4d86b54c1ccf23291c95eeadcf388488
+PODFILE CHECKSUM: b2ce9c1e8d4b5cf3cd8b570b454c97b9d7f8c8ac
 
 COCOAPODS: 1.12.1

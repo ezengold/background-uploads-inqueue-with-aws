@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "octicon_file-24.pdf",
+      "filename" : "octicon_file-24.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "octicon_file-24 1.pdf",
+      "filename" : "octicon_file-24@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "octicon_file-24 2.pdf",
+      "filename" : "octicon_file-24@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -134,14 +134,21 @@ struct ChatsView: View {
 						Text(item.folderName)
 							.font(.appBoldFont(ofSize: 17))
 							.foregroundColor(.appPrincipal)
-						Text("No asset yet")
+						Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) asset\(item.contents.count > 1 ? "s" : "")")
 							.font(.appRegularFont(ofSize: 15))
 							.foregroundColor(.black)
 							.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-						Text("Last update : 2023-09-11 at 7 am")
-							.font(.appRegularFont(ofSize: 13))
-							.foregroundColor(.appDarkGray)
-							.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+						if let lastUpdate = item.getLastestChangeDate() {
+							Text("Last update : \(lastUpdate.toFormat("yyyy-MM-dd [at] HH:mm"))")
+								.font(.appRegularFont(ofSize: 13))
+								.foregroundColor(.appDarkGray)
+								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+						} else {
+							Text("No change occured in a while")
+								.font(.appRegularFont(ofSize: 13))
+								.foregroundColor(.appDarkGray)
+								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+						}
 					}
 					.padding(10)
 					.background(Color.white)

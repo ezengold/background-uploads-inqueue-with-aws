@@ -7,4 +7,5 @@ target 'BackUploadsWithAws' do
 
   # Pods for BackUploadsWithAws
   pod 'AWSS3'
+	pod 'YPImagePicker'
 end

@@ -102,3 +102,12 @@ extension UIColor {
 	
 	static let appPrincipal: UIColor = UIColor(named: "AccentColor") ?? .init(red: 0.251, green: 0.482, blue: 1.0, alpha: 1.0)
 }
+
+extension Date {
+
+	func toFormat(_ format: String) -> String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = format
+		return dateFormatter.string(from: self)
+	}
+}
