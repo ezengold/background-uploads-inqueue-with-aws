@@ -69,7 +69,7 @@ class FolderDetailsViewController: UIViewController {
 }
 
 // MARK: - Handle pickers
-extension FolderDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension FolderDetailsViewController {
 	
 	@objc
 	func pickImages(_ action: UIAction) {
@@ -80,8 +80,9 @@ extension FolderDetailsViewController: UIImagePickerControllerDelegate, UINaviga
 		lazy var vc = YPImagePicker(configuration: configs)
 
 		vc.didFinishPicking { [unowned vc] items, cancelled in
-			debugPrint(items)
-			vc.dismiss(animated: true, completion: nil)
+			vc.dismiss(animated: false) {
+				self.previewPickedAssets(withItems: items)
+			}
 		}
 		self.present(vc, animated: true)
 	}
@@ -95,23 +96,15 @@ extension FolderDetailsViewController: UIImagePickerControllerDelegate, UINaviga
 		lazy var vc = YPImagePicker(configuration: configs)
 
 		vc.didFinishPicking { [unowned vc] items, cancelled in
-			debugPrint(items)
-			vc.dismiss(animated: true, completion: nil)
+			vc.dismiss(animated: false) {
+				self.previewPickedAssets(withItems: items)
+			}
 		}
 		self.present(vc, animated: true)
 	}
 	
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-		picker.dismiss(animated: true)
-
-		if info[.mediaType] as? String == "public.image" {
-			print("Result for imagesPicker")
-		} else {
-			print("Result for videosPicker")
-		}
-	}
-	
 	private func getDefaultConfigs() -> YPImagePickerConfiguration {
+		
 		var config = YPImagePickerConfiguration()
 		config.albumName = "BacksUp"
 		config.preferredStatusBarStyle = UIStatusBarStyle.default
@@ -136,6 +129,7 @@ extension FolderDetailsViewController: UIImagePickerControllerDelegate, UINaviga
 	}
 	
 	private func setImageConfigs(toConfig config: inout YPImagePickerConfiguration) {
+		
 		config.showsCrop = .none
 		config.shouldSaveNewPicturesToAlbum = false
 		config.targetImageSize = .original
@@ -151,11 +145,12 @@ extension FolderDetailsViewController: UIImagePickerControllerDelegate, UINaviga
 	}
 	
 	private func setVideoConfigs(toConfig config: inout YPImagePickerConfiguration) {
+		
 		config.showsVideoTrimmer = true
 		config.screens = [.library, .video]
 		config.library.minNumberOfItems = 1
-		config.library.maxNumberOfItems = 1
-		config.video.libraryTimeLimit = 1800
+		config.library.maxNumberOfItems = 2
+		config.video.libraryTimeLimit = 60.0 * 3
 		config.video.compression = AVAssetExportPresetHighestQuality
 		config.video.fileType = .mp4
 		config.library.mediaType = .video
