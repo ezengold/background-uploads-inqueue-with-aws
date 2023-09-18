@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "fluent_video-20-regular.pdf",
+      "filename" : "fluent_video-20-regular.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "fluent_video-20-regular 1.pdf",
+      "filename" : "fluent_video-20-regular@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "fluent_video-20-regular 2.pdf",
+      "filename" : "fluent_video-20-regular@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -10,4 +10,5 @@ import Foundation
 struct ChatFile: Codable, Identifiable {
 	let id: String
 	var file: UploadFile
+	var addedAt: Date
 }

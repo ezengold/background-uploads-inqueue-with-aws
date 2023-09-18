@@ -12,12 +12,17 @@ class FolderDetailsViewModel: ObservableObject {
 
 	var host: FolderDetailsViewController
 	
-	init(host: UIViewController) {
+	var folder: ChatFolder
+	
+	init(host: UIViewController, withFolder: ChatFolder) {
+
+		self.folder = withFolder
 
 		guard host is FolderDetailsViewController else {
 			self.host = FolderDetailsViewController()
 			return
 		}
+
 		self.host = host as! FolderDetailsViewController
 	}
 }
