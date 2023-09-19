@@ -81,7 +81,9 @@ extension FolderDetailsViewController {
 
 		vc.didFinishPicking { [unowned vc] items, cancelled in
 			vc.dismiss(animated: false) {
-				self.previewPickedAssets(withItems: items)
+				if !cancelled {
+					self.previewPickedAssets(withItems: items.map({ ( FileType.image, $0 ) }), onFinish: self.vm.startUploads)
+				}
 			}
 		}
 		self.present(vc, animated: true)
@@ -97,7 +99,9 @@ extension FolderDetailsViewController {
 
 		vc.didFinishPicking { [unowned vc] items, cancelled in
 			vc.dismiss(animated: false) {
-				self.previewPickedAssets(withItems: items)
+				if !cancelled {
+					self.previewPickedAssets(withItems: items.map({ ( FileType.video, $0 ) }), onFinish: self.vm.startUploads)
+				}
 			}
 		}
 		self.present(vc, animated: true)

@@ -25,4 +25,8 @@ class FolderDetailsViewModel: ObservableObject {
 
 		self.host = host as! FolderDetailsViewController
 	}
+	
+	func startUploads(ofItems items: [PreviewElement]) {
+		debugPrint("Start Uploads of items: \(items)")
+	}
 }

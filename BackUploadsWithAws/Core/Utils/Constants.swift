@@ -8,6 +8,7 @@
 import Foundation
 
 struct Constants {
+
 	static let ROOT_IDENTIFIER = "\(Bundle.main.bundleIdentifier ?? "")"
 	
 	static let UPLOAD_TEMP_PATH: String = "uploads"
