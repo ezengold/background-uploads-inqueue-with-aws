@@ -78,7 +78,7 @@ struct ChatFolderApi {
 	
 	private func loadFromSourceFile() throws -> [ChatFolder] {
 
-		guard let url = Bundle.main.url(forResource: "folders", withExtension: "json") else {
+		guard let url = Resources.dummyFolders else {
 			throw ApiError("Resource not found", error: NSError(domain: "Unable to resolve [folders.json]", code: 404))
 		}
 		
