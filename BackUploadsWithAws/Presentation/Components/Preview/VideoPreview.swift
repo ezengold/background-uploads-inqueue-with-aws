@@ -10,9 +10,7 @@ import AVKit
 
 struct VideoPreview: View {
 	
-	@Binding var url: URL
-	
-	@State var player: AVPlayer? = nil
+	@Binding var player: AVPlayer
 	
     var body: some View {
 		VStack {
@@ -20,9 +18,9 @@ struct VideoPreview: View {
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 		.background(Color.black.opacity(0.04))
-		.cornerRadius(10)
-		.onAppear {
-			self.player = AVPlayer(url: self.url)
+		.cornerRadius(30)
+		.onDisappear {
+			self.player.pause()
 		}
     }
 }
@@ -30,6 +28,6 @@ struct VideoPreview: View {
 struct VideoPreview_Previews: PreviewProvider {
 
     static var previews: some View {
-		VideoPreview(url: .constant(Resources.dummyVideo))
+		VideoPreview(player: .constant(AVPlayer(url: Resources.dummyVideo)))
     }
 }

@@ -10,7 +10,10 @@ import UIKit
 import YPImagePicker
 
 class AssetsPreviewViewModel: ObservableObject {
+	
 	var host: AssetsPreviewViewController
+	
+	@Published var isFilePreview: Bool = false
 	
 	@Published var items = [PreviewElement]()
 
@@ -27,6 +30,7 @@ class AssetsPreviewViewModel: ObservableObject {
 		
 		self.items = self.formatItems(using: previewItems)
 		self.currentItem = self.items[0]
+		self.isFilePreview = self.items[0].type == .file
 	}
 	
 	private func formatItems(using itemsToUse: [(FileType, Any)]) -> [PreviewElement] {
@@ -57,7 +61,10 @@ class AssetsPreviewViewModel: ObservableObject {
 				}
 
 			case .file:
-				return PreviewElement(type: .file, fileData: itemData)
+				guard let data = itemData as? URL else {
+					return PreviewElement(type: .file, fileData: nil)
+				}
+				return PreviewElement(type: .file, fileData: data)
 			}
 		})
 	}

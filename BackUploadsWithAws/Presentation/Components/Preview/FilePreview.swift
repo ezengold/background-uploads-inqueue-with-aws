@@ -10,7 +10,7 @@ import QuickLook
 
 struct FilePreviewBridge: UIViewControllerRepresentable {
 	
-	let url: URL
+	var files: [PreviewElement]
 	
 	func makeUIViewController(context: Context) -> QLPreviewController {
 		let vc = QLPreviewController()
@@ -18,9 +18,7 @@ struct FilePreviewBridge: UIViewControllerRepresentable {
 		return vc
 	}
 	
-	func updateUIViewController(_ uiViewController: QLPreviewController, context: Context) {
-		// No update needed
-	}
+	func updateUIViewController(_ uiViewController: QLPreviewController, context: Context) { }
 	
 	func makeCoordinator() -> Coordinator {
 		Coordinator(parent: self)
@@ -35,32 +33,45 @@ struct FilePreviewBridge: UIViewControllerRepresentable {
 		}
 
 		func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-			1
+			self.parent.files.count
 		}
 		
 		func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-			parent.url as NSURL
+			if let safeFile = self.parent.files[index].fileData {
+				return safeFile as NSURL
+			}
+			return URL(string: "")! as NSURL
 		}
 	}
 }
 
 struct FilePreview: View {
 	
-	@Binding var url: URL
+	@Binding var files: [PreviewElement]
 	
     var body: some View {
 		VStack {
-			FilePreviewBridge(url: self.url)
+			Text("Slide to Left or Right to see more files")
+				.font(.appRegularFont(ofSize: 14))
+				.foregroundColor(.gray)
+				.padding(.vertical, 5)
+			VStack {
+				FilePreviewBridge(files: files)
+			}
+			.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+			.background(Color.black.opacity(0.04))
+			.cornerRadius(0)
+			.overlay(
+				RoundedRectangle(cornerRadius: 0)
+					.stroke(Color.black.opacity(0.04), lineWidth: 2)
+			)
 		}
-		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-		.background(Color.black.opacity(0.04))
-		.cornerRadius(10)
     }
 }
 
 struct FilePreview_Previews: PreviewProvider {
 
     static var previews: some View {
-		FilePreview(url: .constant(Resources.dummyDocument))
+		FilePreview(files: .constant([]))
     }
 }

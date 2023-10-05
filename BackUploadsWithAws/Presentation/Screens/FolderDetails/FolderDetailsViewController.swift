@@ -57,9 +57,7 @@ class FolderDetailsViewController: UIViewController {
 				children: [
 					UIAction(title: "Image", image: UIImage(named: "image-icon"), handler: self.pickImages),
 					UIAction(title: "Video", image: UIImage(named: "video-icon"), handler: self.pickVideos),
-					UIAction(title: "File", image: UIImage(systemName: "doc"), handler: { _ in
-						//
-					}),
+					UIAction(title: "File", image: UIImage(systemName: "doc"), handler: self.pickFiles),
 				]
 			)
 		)
@@ -104,6 +102,15 @@ extension FolderDetailsViewController {
 				}
 			}
 		}
+		self.present(vc, animated: true)
+	}
+	
+	@objc
+	func pickFiles(_ action: UIAction) {
+		
+		lazy var vc = UIDocumentPickerViewController(forOpeningContentTypes: [.audio, .html, .javaScript, .json, .mp3, .pdf, .text, .zip])
+		vc.delegate = self
+		vc.allowsMultipleSelection = true
 		self.present(vc, animated: true)
 	}
 	
@@ -159,5 +166,16 @@ extension FolderDetailsViewController {
 		config.video.fileType = .mp4
 		config.library.mediaType = .video
 		config.library.isSquareByDefault = false
+		config.library.defaultMultipleSelection = true
+		config.library.preSelectItemOnMultipleSelection = false
+	}
+}
+
+// MARK: - Document Picker delegate methods
+extension FolderDetailsViewController: UIDocumentPickerDelegate {
+	
+	func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+
+		self.previewPickedAssets(withItems: urls.map({ ( FileType.file, $0 ) }), onFinish: self.vm.startUploads)
 	}
 }

@@ -8,13 +8,14 @@
 import SwiftUI
 import UIKit
 import YPImagePicker
+import AVKit
 
 class AssetsPreviewViewController: UIViewController {
-
+	
 	var vm: AssetsPreviewViewModel!
-
+	
 	var pickedItems = [(FileType, Any)]()
-
+	
 	var onFinish: (([PreviewElement]) -> Void)?
 	
 	override func viewDidLoad() {
@@ -26,7 +27,7 @@ class AssetsPreviewViewController: UIViewController {
 		let hosting = UIHostingController(rootView: hostedView)
 		hosting.view.translatesAutoresizingMaskIntoConstraints = false
 		hosting.view.backgroundColor = UIColor.white
-
+		
 		addChild(hosting)
 		view.addSubview(hosting.view)
 		hosting.didMove(toParent: self)
@@ -48,43 +49,45 @@ struct AssetsPreviewView: View {
 	
 	var body: some View {
 		VStack(spacing: 15) {
-			if let previewItem = vm.currentItem {
-				if previewItem.type == .image {
-					if let safeImage = previewItem.imageData?.image {
-						ImagePreview(image: .constant(safeImage))
-							.padding(.horizontal, 15)
-							.padding(.top, 15)
-					}
-				} else if previewItem.type == .video {
-					if let safeVideo = previewItem.videoData?.url {
-						VideoPreview(url: .constant(safeVideo))
-							.padding(.horizontal, 15)
-							.padding(.top, 15)
-					}
-				} else if previewItem.type == .file {
-					if let safeFile = previewItem.videoData?.url {
-						FilePreview(url: .constant(safeFile))
-							.padding(.horizontal, 15)
-							.padding(.top, 15)
+			if vm.isFilePreview {
+				FilePreview(files: .constant(vm.items))
+					.padding(.horizontal, 15)
+					.padding(.top, 15)
+			} else {
+				if let previewItem = vm.currentItem {
+					if previewItem.type == .image {
+						if let safeImage = previewItem.imageData?.image {
+							ImagePreview(image: .constant(safeImage))
+								.padding(.horizontal, 15)
+								.padding(.top, 15)
+						}
+					} else if previewItem.type == .video {
+						if let safeVideo = previewItem.videoData?.url {
+							VideoPreview(player: .constant(AVPlayer(url: safeVideo)))
+								.padding(.horizontal, 15)
+								.padding(.top, 15)
+						}
 					}
 				}
 			}
 			Text("\(vm.items.count) Files")
 				.font(.appBoldFont(ofSize: 16))
-			ScrollView(.horizontal, showsIndicators: false) {
-				HStack(alignment: .center, spacing: 15) {
-					ForEach(vm.items) { item in
-						PreviewMini(
-							item: item,
-							isActive: .constant(vm.currentItem == item)
-						) {
-							vm.viewFully(item: item)
+			if !vm.isFilePreview {
+				ScrollView(.horizontal, showsIndicators: false) {
+					HStack(alignment: .center, spacing: 15) {
+						ForEach(vm.items) { item in
+							PreviewMini(
+								item: item,
+								isActive: .constant(vm.currentItem == item)
+							) {
+								vm.viewFully(item: item)
+							}
 						}
 					}
+					.padding(.vertical, 5)
+					.padding(.leading, 15)
+					.padding(.trailing, 50)
 				}
-				.padding(.vertical, 5)
-				.padding(.leading, 15)
-				.padding(.trailing, 50)
 			}
 			HStack(alignment: .bottom) {
 				Button {
@@ -118,12 +121,12 @@ struct AssetsPreviewView: View {
 			}
 			.padding(.horizontal, 15)
 		}
-    }
+	}
 }
 
 struct AssetsPreviewView_Previews: PreviewProvider {
 	
-    static var previews: some View {
-        AssetsPreviewView(vm: AssetsPreviewViewModel(host: UIViewController(), withItems: []))
-    }
+	static var previews: some View {
+		AssetsPreviewView(vm: AssetsPreviewViewModel(host: UIViewController(), withItems: []))
+	}
 }

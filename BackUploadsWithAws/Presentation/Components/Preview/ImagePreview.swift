@@ -19,7 +19,7 @@ struct ImagePreview: View {
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 		.background(Color.black.opacity(0.04))
-		.cornerRadius(10)
+		.cornerRadius(30)
     }
 }
 

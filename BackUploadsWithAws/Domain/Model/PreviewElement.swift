@@ -14,7 +14,7 @@ struct PreviewElement: Identifiable, Equatable {
 	var type: FileType
 	var imageData: YPMediaPhoto?
 	var videoData: YPMediaVideo?
-	var fileData: Any?
+	var fileData: URL?
 	
 	static func == (lhs: PreviewElement, rhs: PreviewElement) -> Bool {
 		lhs.id == rhs.id

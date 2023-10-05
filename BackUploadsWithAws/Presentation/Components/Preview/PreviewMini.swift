@@ -43,7 +43,7 @@ struct PreviewMini: View {
 					onClick?()
 				}
 		} else if item.type == .video {
-			Image(uiImage: item.imageData?.image ?? UIImage())
+			Image(uiImage: item.videoData?.thumbnail ?? UIImage())
 				.resizable()
 				.scaledToFill()
 				.frame(width: 120, height: 120)
