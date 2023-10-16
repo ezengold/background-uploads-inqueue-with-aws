@@ -295,6 +295,7 @@ final class UploadService {
 			
 			return permanentURL
 		} catch {
+			print(error)
 			return nil
 		}
 	}
@@ -307,7 +308,7 @@ final class UploadService {
 		do {
 			try FileManager.default.createDirectory(atPath: dirPathString, withIntermediateDirectories: true, attributes:nil)
 		} catch {
-			//
+			print(error)
 		}
 	}
 	

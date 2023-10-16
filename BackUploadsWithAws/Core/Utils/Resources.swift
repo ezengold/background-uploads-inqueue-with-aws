@@ -9,6 +9,8 @@ import Foundation
 
 struct Resources {
 	
+	static let dummyImage = Bundle.main.url(forResource: "dummy", withExtension: "jpeg")!
+	
 	static let dummyVideo = Bundle.main.url(forResource: "dummy", withExtension: "mp4")!
 	
 	static let dummyDocument = Bundle.main.url(forResource: "dummy", withExtension: "pdf")!
