@@ -42,7 +42,11 @@
 		B1B706382AB206BA008A1F35 /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B706372AB206BA008A1F35 /* ChatsViewModel.swift */; };
 		B1B7063A2AB206CB008A1F35 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B706392AB206CB008A1F35 /* ChatsView.swift */; };
 		B1CE9C052ADD579300DDE5C2 /* UpdateFolderContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CE9C042ADD579300DDE5C2 /* UpdateFolderContents.swift */; };
-		B1CE9C082ADD890800DDE5C2 /* ChatFilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CE9C072ADD890800DDE5C2 /* ChatFilePreview.swift */; };
+		B1CE9C082ADD890800DDE5C2 /* ChatFileLoadingPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CE9C072ADD890800DDE5C2 /* ChatFileLoadingPreview.swift */; };
+		B1DFC9792AE7317D003CB677 /* ChatFilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DFC9782AE7317D003CB677 /* ChatFilePreview.swift */; };
+		B1DFC97B2AE749A7003CB677 /* UpdateAFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DFC97A2AE749A7003CB677 /* UpdateAFile.swift */; };
+		B1DFC97D2AE74E13003CB677 /* FetchFolderContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DFC97C2AE74E13003CB677 /* FetchFolderContents.swift */; };
+		B1DFC97F2AE75AEE003CB677 /* EventNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DFC97E2AE75AEE003CB677 /* EventNames.swift */; };
 		B1E325C42AB03AB1003BF87D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325C32AB03AB1003BF87D /* AppDelegate.swift */; };
 		B1E325C62AB03AB1003BF87D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325C52AB03AB1003BF87D /* SceneDelegate.swift */; };
 		B1E325CB2AB03AB1003BF87D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E325C92AB03AB1003BF87D /* Main.storyboard */; };
@@ -94,7 +98,11 @@
 		B1B706372AB206BA008A1F35 /* ChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewModel.swift; sourceTree = "<group>"; };
 		B1B706392AB206CB008A1F35 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
 		B1CE9C042ADD579300DDE5C2 /* UpdateFolderContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFolderContents.swift; sourceTree = "<group>"; };
-		B1CE9C072ADD890800DDE5C2 /* ChatFilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilePreview.swift; sourceTree = "<group>"; };
+		B1CE9C072ADD890800DDE5C2 /* ChatFileLoadingPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFileLoadingPreview.swift; sourceTree = "<group>"; };
+		B1DFC9782AE7317D003CB677 /* ChatFilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilePreview.swift; sourceTree = "<group>"; };
+		B1DFC97A2AE749A7003CB677 /* UpdateAFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAFile.swift; sourceTree = "<group>"; };
+		B1DFC97C2AE74E13003CB677 /* FetchFolderContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFolderContents.swift; sourceTree = "<group>"; };
+		B1DFC97E2AE75AEE003CB677 /* EventNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventNames.swift; sourceTree = "<group>"; };
 		B1E325C02AB03AB1003BF87D /* BackUploadsWithAws.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BackUploadsWithAws.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E325C32AB03AB1003BF87D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1E325C52AB03AB1003BF87D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +184,8 @@
 				B101E2462AB3CB1700744539 /* FetchAllFolders.swift */,
 				B148C0822AB2FC1000048DCE /* SearchFolders.swift */,
 				B1CE9C042ADD579300DDE5C2 /* UpdateFolderContents.swift */,
+				B1DFC97A2AE749A7003CB677 /* UpdateAFile.swift */,
+				B1DFC97C2AE74E13003CB677 /* FetchFolderContents.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -283,7 +293,8 @@
 		B1CE9C062ADD88D800DDE5C2 /* ChatFile */ = {
 			isa = PBXGroup;
 			children = (
-				B1CE9C072ADD890800DDE5C2 /* ChatFilePreview.swift */,
+				B1CE9C072ADD890800DDE5C2 /* ChatFileLoadingPreview.swift */,
+				B1DFC9782AE7317D003CB677 /* ChatFilePreview.swift */,
 			);
 			path = ChatFile;
 			sourceTree = "<group>";
@@ -370,6 +381,7 @@
 				B1E325E82AB0507B003BF87D /* Extensions.swift */,
 				B14162E72AB2808C0095E986 /* Navigations.swift */,
 				B13D98552AB861AF007E106B /* Resources.swift */,
+				B1DFC97E2AE75AEE003CB677 /* EventNames.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -501,6 +513,7 @@
 				B1E325E02AB03DEC003BF87D /* UploadFile.swift in Sources */,
 				B14162E62AB2801D0095E986 /* OngoingsViewModel.swift in Sources */,
 				B101E2472AB3CB1700744539 /* FetchAllFolders.swift in Sources */,
+				B1DFC97D2AE74E13003CB677 /* FetchFolderContents.swift in Sources */,
 				B13D98502AB85A2E007E106B /* ImagePreview.swift in Sources */,
 				B13D98562AB861AF007E106B /* Resources.swift in Sources */,
 				B1E325D92AB03C5E003BF87D /* UploadService.swift in Sources */,
@@ -513,6 +526,8 @@
 				B1E325E92AB0507B003BF87D /* Extensions.swift in Sources */,
 				B1E325DE2AB03D0C003BF87D /* TaskStatus.swift in Sources */,
 				B148C0802AB2F97D00048DCE /* ChatFolderApi.swift in Sources */,
+				B1DFC97F2AE75AEE003CB677 /* EventNames.swift in Sources */,
+				B1DFC9792AE7317D003CB677 /* ChatFilePreview.swift in Sources */,
 				B13D984A2AB84764007E106B /* AssetsPreviewView.swift in Sources */,
 				B14162E82AB2808C0095E986 /* Navigations.swift in Sources */,
 				B148C08C2AB3136C00048DCE /* Toast.swift in Sources */,
@@ -523,11 +538,12 @@
 				B14162E42AB280090095E986 /* OngoingsView.swift in Sources */,
 				B1E325C62AB03AB1003BF87D /* SceneDelegate.swift in Sources */,
 				B148C0912AB31A3500048DCE /* FolderDetailsViewModel.swift in Sources */,
-				B1CE9C082ADD890800DDE5C2 /* ChatFilePreview.swift in Sources */,
+				B1CE9C082ADD890800DDE5C2 /* ChatFileLoadingPreview.swift in Sources */,
 				B13D984E2AB84F7B007E106B /* PreviewMini.swift in Sources */,
 				B13D98582AB862D6007E106B /* FilePreview.swift in Sources */,
 				B1E325E32AB03FB9003BF87D /* S3Keys.swift in Sources */,
 				B101E2452AB3C54600744539 /* Helpers.swift in Sources */,
+				B1DFC97B2AE749A7003CB677 /* UpdateAFile.swift in Sources */,
 				B148C0932AB31A4300048DCE /* FolderDetailsView.swift in Sources */,
 				B1B7063A2AB206CB008A1F35 /* ChatsView.swift in Sources */,
 				B10E621E2AB99D7C0093FB54 /* PreviewElement.swift in Sources */,
@@ -684,9 +700,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BackUploadsWithAws/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Backs Up";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Please let $(PRODUCT_NAME) access your camera for better usage experience";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please let $(PRODUCT_NAME) access your microphone for better usage experience";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please let $(PRODUCT_NAME) access your photo library for better usage experience";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please let BackUploadsWithAws access your camera for better usage experience";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please let BackUploadsWithAws access your microphone for better usage experience";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please let BackUploadsWithAws access your photo library for better usage experience";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -694,7 +710,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -723,9 +739,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BackUploadsWithAws/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Backs Up";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Please let $(PRODUCT_NAME) access your camera for better usage experience";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please let $(PRODUCT_NAME) access your microphone for better usage experience";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please let $(PRODUCT_NAME) access your photo library for better usage experience";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please let BackUploadsWithAws access your camera for better usage experience";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please let BackUploadsWithAws access your microphone for better usage experience";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please let BackUploadsWithAws access your photo library for better usage experience";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -733,7 +749,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

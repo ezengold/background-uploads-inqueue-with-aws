@@ -40,6 +40,15 @@ class ChatsViewController: UIViewController {
 		])
 		
 		self.hideKeyboardWhenTappedAround()
+		
+		self.vm.fetchAllData()
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleRefresh),
+			name: .refreshChats,
+			object: nil
+		)
 	}
 	
 	private func setupNavBar() {
@@ -97,6 +106,12 @@ class ChatsViewController: UIViewController {
 	}
 	
 	@objc
+	func handleRefresh() {
+
+		self.vm.fetchAllData()
+	}
+	
+	@objc
 	func onViewUploads() {
 
 		self.showOngoingUploads()
@@ -127,44 +142,45 @@ struct ChatsView: View {
 	@StateObject var vm: ChatsViewModel
 	
 	var body: some View {
-		ScrollView {
-			LazyVStack(spacing: 15) {
-				ForEach(vm.data, id: \.id) { item in
-					VStack(alignment: .leading, spacing: 10) {
-						Text(item.folderName)
-							.font(.appBoldFont(ofSize: 17))
-							.foregroundColor(.appPrincipal)
-						Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) asset\(item.contents.count > 1 ? "s" : "")")
-							.font(.appRegularFont(ofSize: 15))
-							.foregroundColor(.black)
-							.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-						if let lastUpdate = item.getLastestChangeDate() {
-							Text("Last update : \(lastUpdate.toFormat("yyyy-MM-dd [at] HH:mm"))")
-								.font(.appRegularFont(ofSize: 13))
-								.foregroundColor(.appDarkGray)
-								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
-						} else {
-							Text("No change occured in a while")
-								.font(.appRegularFont(ofSize: 13))
-								.foregroundColor(.appDarkGray)
-								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+		if vm.isLoading {
+			ProgressView()
+		} else {
+			ScrollView {
+				LazyVStack(spacing: 15) {
+					ForEach(vm.data, id: \.id) { item in
+						VStack(alignment: .leading, spacing: 10) {
+							Text(item.folderName)
+								.font(.appBoldFont(ofSize: 17))
+								.foregroundColor(.appPrincipal)
+							Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) asset\(item.contents.count > 1 ? "s" : "")")
+								.font(.appRegularFont(ofSize: 15))
+								.foregroundColor(.black)
+								.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+							if let lastUpdate = item.getLastestChangeDate() {
+								Text("Last update : \(lastUpdate.toFormat("yyyy-MM-dd [at] HH:mm"))")
+									.font(.appRegularFont(ofSize: 13))
+									.foregroundColor(.appDarkGray)
+									.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+							} else {
+								Text("No change occured in a while")
+									.font(.appRegularFont(ofSize: 13))
+									.foregroundColor(.appDarkGray)
+									.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+							}
+						}
+						.padding(10)
+						.background(Color.white)
+						.cornerRadius(7)
+						.clipped()
+						.shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 1)
+						.onTapGesture {
+							vm.viewDetails(of: item)
 						}
 					}
-					.padding(10)
-					.background(Color.white)
-					.cornerRadius(7)
-					.clipped()
-					.shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 1)
-					.onTapGesture {
-						vm.viewDetails(of: item)
-					}
 				}
-			}
-			.padding(.horizontal, 15)
-			.padding(.top, 20)
-			.padding(.bottom, 100)
-			.onAppear {
-				vm.fetchAllData()
+				.padding(.horizontal, 15)
+				.padding(.top, 20)
+				.padding(.bottom, 100)
 			}
 		}
 	}

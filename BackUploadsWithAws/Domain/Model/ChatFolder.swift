@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatFolder: Codable, Identifiable {
+struct ChatFolder: Codable, Identifiable, Equatable {
 	let id: String
 	let folderName: String
 	var contents: [ChatFile]
@@ -24,4 +24,8 @@ struct ChatFolder: Codable, Identifiable {
 	}
 	
 	static let DUMMY_FOLDER = ChatFolder(id: "1", folderName: "Dummy Folder", contents: [])
+	
+	static func == (lhs: ChatFolder, rhs: ChatFolder) -> Bool {
+		lhs.id == rhs.id
+	}
 }

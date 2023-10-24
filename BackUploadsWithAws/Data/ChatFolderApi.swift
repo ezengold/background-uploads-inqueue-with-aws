@@ -57,6 +57,30 @@ struct ChatFolderApi {
 		try saveToStorage()
 	}
 	
+	func updateFile(ofId fileId: String, with data: UploadFile, shouldUpdateStatus shouldUpdate: Bool = false) throws {
+		guard let folderIndex = ChatFolderApi.ALL_DATA.firstIndex(
+			where: { fld in
+				fld.contents.contains(where: { 
+					$0.id == fileId
+				})
+			}
+		) else {
+			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve any folder containing a file of id : [\(fileId)]", code: 404))
+		}
+		
+		guard let fileIndexInFolder = ChatFolderApi.ALL_DATA[folderIndex].contents.firstIndex(where: { $0.id == fileId }) else {
+			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve any folder containing a file of id : [\(fileId)]", code: 404))
+		}
+
+		ChatFolderApi.ALL_DATA[folderIndex].contents[fileIndexInFolder].file = data
+		
+		if shouldUpdate {
+			ChatFolderApi.ALL_DATA[folderIndex].contents[fileIndexInFolder].isUploaded = data.status == .success
+		}
+
+		try saveToStorage()
+	}
+	
 	// MARK: - Private methods
 
 	private func saveToStorage() throws {

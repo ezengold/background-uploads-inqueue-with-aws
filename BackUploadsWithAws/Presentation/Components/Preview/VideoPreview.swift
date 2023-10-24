@@ -12,13 +12,15 @@ struct VideoPreview: View {
 	
 	@Binding var player: AVPlayer
 	
+	var cornerRadius: CGFloat = 30
+	
     var body: some View {
 		VStack {
 			VideoPlayer(player: player)
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 		.background(Color.black.opacity(0.04))
-		.cornerRadius(30)
+		.cornerRadius(cornerRadius)
 		.onDisappear {
 			self.player.pause()
 		}

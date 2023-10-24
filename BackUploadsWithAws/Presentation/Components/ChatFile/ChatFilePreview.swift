@@ -2,93 +2,98 @@
 //  ChatFilePreview.swift
 //  BackUploadsWithAws
 //
-//  Created by ezen on 16/10/2023.
+//  Created by ezen on 23/10/2023.
 //
 
 import SwiftUI
+import AVKit
 
 struct ChatFilePreview: View {
 	
 	@Binding var file: ChatFile
 	
+	var onDelete: ((ChatFile) -> Void)?
+	
 	var body: some View {
-		HStack {
-			VStack(alignment: .leading, spacing: 10) {
-				HStack(alignment: .top) {
+		VStack(spacing: 5) {
+			HStack(alignment: .top, spacing: 10) {
+				VStack(alignment: .center, spacing: 10) {
 					Text(file.file.s3UploadKey)
 						.font(.appBoldFont(ofSize: 15))
 						.foregroundColor(.black)
-					Spacer()
-					Image(uiImage: file.file.contentType.icon)
-						.resizable()
-						.foregroundColor(.black)
-						.scaledToFit()
-						.frame(width: 25, height: 25)
-				}
-				if file.file.status == .error {
-					Text("Failed due to such reason")
+						.frame(maxWidth: .infinity, alignment: .leading)
+					Text("Added : \(file.addedAt.toFormat("yyyy-MM-dd [at] HH:mm"))")
 						.font(.appRegularFont(ofSize: 14))
-						.foregroundColor(.red)
+						.foregroundColor(.appDarkGray)
+						.frame(maxWidth: .infinity, alignment: .leading)
 				}
-				if file.file.status == .success {
-					Text("Uploaded successfully ✅")
-						.font(.appRegularFont(ofSize: 14))
-						.foregroundColor(.green)
-				}
-				if [TaskStatus.pending, TaskStatus.running].contains(file.file.status) {
-					ProgressView(value: file.file.progress)
-						.accentColor(.appPrincipal)
-				}
-				Text("Added : \(file.addedAt.toFormat("yyyy-MM-dd [at] HH:mm"))")
-					.font(.appRegularFont(ofSize: 14))
-					.foregroundColor(.appDarkGray)
-			}
-			.frame(width: UIScreen.main.bounds.width * 0.6)
-			.padding(10)
-			.background(Color.white)
-			.cornerRadius(7)
-			Spacer()
-			HStack(alignment: .center, spacing: 10) {
-				Image(systemName: "arrow.clockwise")
-					.resizable()
-					.foregroundColor(.appPrincipal)
-					.scaledToFit()
-					.frame(width: 25, height: 25)
 				Image(systemName: "trash")
 					.resizable()
-					.foregroundColor(.white)
+					.foregroundColor(.red)
 					.scaledToFit()
-					.frame(width: 25, height: 25)
+					.frame(width: 20, height: 20)
+					.onTapGesture {
+						onDelete?(file)
+					}
+			}
+			.frame(maxWidth: .infinity)
+			.padding(10)
+			.background(Color.white)
+			.cornerRadius(5)
+			if file.file.contentType == .image {
+				AsyncImage(url: URL(string: file.file.publicUrl)) { img in
+					img
+						.resizable()
+						.aspectRatio(contentMode: .fill)
+					
+				} placeholder: {
+					Image(uiImage: FileType.image.icon)
+						.resizable()
+						.scaledToFit()
+						.foregroundColor(.white)
+						.frame(width: 50, height: 50)
+				}
+				.frame(height: 200)
+				.frame(maxWidth: .infinity)
+				.background(Color.black.opacity(0.1))
+				.cornerRadius(5)
+			} else if file.file.contentType == .video {
+				if let safeVideoUrl = URL(string: file.file.publicUrl) {
+					VideoPreview(
+						player: .constant(AVPlayer(url: safeVideoUrl)),
+						cornerRadius: 5
+					)
+					.frame(height: 200)
+					.frame(maxWidth: .infinity)
+				}
+			} else if file.file.contentType == .file {
+				Button {
+					// TODO: Visualize the file
+				} label: {
+					VStack(alignment: .center, spacing: 10) {
+						Image(uiImage: FileType.file.icon)
+							.resizable()
+							.scaledToFit()
+							.foregroundColor(.white)
+							.frame(width: 40, height: 40)
+						Text("Click here to open")
+							.font(.appRegularFont(ofSize: 14))
+							.foregroundColor(.white)
+					}
+				}
+				.frame(height: 200)
+				.frame(maxWidth: .infinity)
+				.background(Color.black.opacity(0.1))
+				.cornerRadius(5)
 			}
 		}
-		.padding(10)
-		.background(
-			Image(uiImage: getBackImage())
-				.blur(radius: 7.0)
-		)
+		.padding(5)
 		.background(Color.appFileBack)
 		.cornerRadius(7)
-	}
-	
-	func getBackImage() -> UIImage {
-		if file.file.contentType == .image {
-			guard let safeUrl = file.file.fileUrl, let safeImage = UIImage(contentsOfFile: safeUrl.path) else {
-				return UIImage()
-			}
-			return safeImage
-		} else if file.file.contentType == .video {
-			if let thumbData = file.thumbData {
-				return UIImage(data: thumbData) ?? UIImage()
-			} else {
-				return UIImage()
-			}
-		} else {
-			return UIImage()
-		}
 	}
 }
 
 #Preview {
-	ChatFilePreview(file: .constant(.DUMMY_VIDEO_FILE))
+	ChatFilePreview(file: .constant(.DUMMY_DOC_FILE))
 		.previewLayout(.sizeThatFits)
 }

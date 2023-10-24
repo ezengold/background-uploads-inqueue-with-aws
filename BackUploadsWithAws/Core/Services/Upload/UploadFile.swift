@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UploadFile: Codable {
+struct UploadFile: Codable, Equatable {
 	
 	var id: String
 	
@@ -42,7 +42,11 @@ struct UploadFile: Codable {
 		let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
 		let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
 		let actualURL = dirFolderUrl.appendingPathComponent(self.getFileName())
-		
+
 		return actualURL
+	}
+	
+	static func == (lhs: UploadFile, rhs: UploadFile) -> Bool {
+		lhs.id == rhs.id
 	}
 }

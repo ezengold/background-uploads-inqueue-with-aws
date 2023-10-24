@@ -12,9 +12,13 @@ class FolderDetailsViewModel: ObservableObject {
 
 	var host: FolderDetailsViewController
 	
+	@Published var isLoading: Bool = true
+	
 	@Published var folder: ChatFolder
 	
 	// MARK: Use cases
+	var fetchFolderUseCase = FetchFolderContentsUseCase(api: ChatFolderApi.shared)
+	
 	var updateFolderUseCase = UpdateFolderContentsUseCase(api: ChatFolderApi.shared)
 	
 	init(host: UIViewController, withFolder: ChatFolder) {
@@ -121,6 +125,7 @@ class FolderDetailsViewModel: ObservableObject {
 				id: item.id,
 				file: uploadFile,
 				addedAt: Date(),
+				isUploaded: false,
 				thumbData: item.type == .video ? (item.videoData?.thumbnail.jpegData(compressionQuality: 1.0)) : nil
 			))
 		}
@@ -129,6 +134,34 @@ class FolderDetailsViewModel: ObservableObject {
 		self.folder.contents = updatedFolderContents
 		
 		self.updateFolder()
+		
+		UploadService.shared.start()
+	}
+	
+	func fetchFolderContents() {
+		DispatchQueue.main.async {
+			self.isLoading = true
+		}
+
+		Task(priority: .high) {
+			let result = await fetchFolderUseCase.execute(forId: self.folder.id)
+			
+			DispatchQueue.main.async {
+				self.isLoading = false
+			}
+			
+			switch result {
+			case .success(let folderDetails):
+				DispatchQueue.main.async {
+					self.folder = folderDetails
+				}
+				
+			case .failure(let error):
+				DispatchQueue.main.async {
+					self.host.toast(error.message)
+				}
+			}
+		}
 	}
 	
 	func updateFolder() {
@@ -139,5 +172,24 @@ class FolderDetailsViewModel: ObservableObject {
 				await self.host.toast(error.localizedDescription)
 			}
 		}
+	}
+	
+	func handleRefreshFile(_ file: ChatFile) {
+		//
+	}
+	
+	func handleDeleteFile(_ file: ChatFile) {
+		print(file)
+//		self.host.alert(
+//			message: "Do you really want to delete this file ?",
+//			buttons: [
+//				.init(title: "No", style: .cancel),
+//				.init(title: "Yes", style: .destructive, action: { _ in
+//					UploadService.shared.removeFromQueue(file.file.id)
+//					self.folder.contents.removeAll(where: { $0 == file })
+//					self.updateFolder()
+//				})
+//			]
+//		)
 	}
 }

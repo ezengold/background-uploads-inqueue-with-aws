@@ -12,6 +12,8 @@ final class UploadService {
 	
 	static let shared = UploadService()
 	
+	var updateAFileUseCase = UpdateAFileUseCase(api: ChatFolderApi.shared)
+	
 	@objc
 	lazy var transferUtility = {
 		AWSS3TransferUtility.default()
@@ -130,8 +132,7 @@ final class UploadService {
 							 Maybe send the publicUrl to a backend. Keep in mind to change the file status in queue if only that request comes succeeded.
 							 Here, we will use an internal function with callback to simulate the backend.
 							 */
-							
-							// TODO: I
+
 							self.setAsUploaded(file: self.queue[currentIndex]) { isSuccess, finalFile in
 								if isSuccess {
 									self.queue[currentIndex] = finalFile
@@ -208,12 +209,23 @@ final class UploadService {
 	}
 	
 	private func setAsUploaded(file: UploadFile, onFinished: @escaping (Bool, UploadFile) -> Void) {
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+		do {
 			// Call callback conditionnaly based on the request response
 			var finalFile = file
-			finalFile.status = .success // Set .error in case of error
-			finalFile.error = "" // Set the error description in case of error
-			onFinished(true, file)
+			finalFile.status = .success
+			finalFile.error = ""
+
+			try updateAFileUseCase.execute(forFile: finalFile, shouldUpdateStatus: true)
+			
+			NotificationCenter.default.post(name: .refreshChats, object: nil)
+			
+			onFinished(true, finalFile)
+		} catch {
+			var finalFile = file
+			finalFile.status = .error
+			finalFile.error = "Error occured while finishing upload"
+			
+			onFinished(true, finalFile)
 		}
 	}
 	
@@ -258,16 +270,16 @@ final class UploadService {
 	}
 	
 	static func getPermanentUrl(_ url: URL, usingName fileName: String) -> URL? {
-		guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-			return nil
-		}
-		
-		UploadService.createUploadsDirectoryIfNoExists()
-		
-		let dirPathString = documentsDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
-		let permanentURL = dirPathString.appendingPathComponent(fileName)
-		
 		do {
+			guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+				return nil
+			}
+			
+			try UploadService.createUploadsDirectoryIfNoExists()
+			
+			let dirPathString = documentsDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+			let permanentURL = dirPathString.appendingPathComponent(fileName)
+			
 			try FileManager.default.moveItem(at: url, to: permanentURL)
 			
 			return permanentURL
@@ -277,39 +289,34 @@ final class UploadService {
 	}
 	
 	static func getPermanentUrl(_ image: UIImage, usingName fileName: String) -> URL? {
-		guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-			return nil
-		}
-		
-		UploadService.createUploadsDirectoryIfNoExists()
-		
-		let dirPathString = documentsDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
-		let permanentURL = dirPathString.appendingPathComponent(fileName)
-		
-		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
-			return nil
-		}
-		
 		do {
+			guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+				return nil
+			}
+			
+			try UploadService.createUploadsDirectoryIfNoExists()
+			
+			let dirPathString = documentsDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+			let permanentURL = dirPathString.appendingPathComponent(fileName)
+			
+			guard let imageData = image.jpegData(compressionQuality: 1.0) else {
+				return nil
+			}
+			
 			try imageData.write(to: permanentURL)
 			
 			return permanentURL
 		} catch {
-			print(error)
 			return nil
 		}
 	}
 	
-	static func createUploadsDirectoryIfNoExists() {
+	static func createUploadsDirectoryIfNoExists() throws {
 		let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
 		let documentDirectory = paths.first! as NSString
 		let dirPathString = documentDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
-		
-		do {
-			try FileManager.default.createDirectory(atPath: dirPathString, withIntermediateDirectories: true, attributes:nil)
-		} catch {
-			print(error)
-		}
+
+		try FileManager.default.createDirectory(atPath: dirPathString, withIntermediateDirectories: true, attributes:nil)
 	}
 	
 	static func isInUploadsDirectory(_ file: UploadFile) -> Bool {
@@ -325,6 +332,7 @@ final class UploadService {
 			checkingPath = checkingURL.path
 		}
 		
+		debugPrint((file, checkingPath))
 		return FileManager.default.fileExists(atPath: checkingPath)
 	}
 	
