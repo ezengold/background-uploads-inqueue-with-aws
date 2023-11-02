@@ -58,14 +58,16 @@ struct ChatFileLoadingPreview: View {
 							onRefresh?(file)
 						}
 				}
-				Image(systemName: "trash")
-					.resizable()
-					.foregroundColor(.white)
-					.scaledToFit()
-					.frame(width: 25, height: 25)
-					.onTapGesture {
-						onDelete?(file)
-					}
+				if file.file.status != .running {
+					Image(systemName: "trash")
+						.resizable()
+						.foregroundColor(.white)
+						.scaledToFit()
+						.frame(width: 25, height: 25)
+						.onTapGesture {
+							onDelete?(file)
+						}
+				}
 			}
 		}
 		.padding(10)

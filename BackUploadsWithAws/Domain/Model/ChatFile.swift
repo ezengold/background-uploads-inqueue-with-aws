@@ -11,9 +11,13 @@ import UIKit
 struct ChatFile: Codable, Identifiable, Equatable {
 
 	var id: String
+	
 	var file: UploadFile
+	
 	var addedAt: Date
+	
 	var isUploaded: Bool = false
+	
 	var thumbData: Data? = nil
 
 	static let DUMMY_IMAGE_FILE = ChatFile(

@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		ChatFolderApi.initialize()
 		
 		UploadService.initialize()
+		
+		// Call this if you want to resume uploads automatically when app launches
 		UploadService.shared.startOnLaunch()
 
 		return true

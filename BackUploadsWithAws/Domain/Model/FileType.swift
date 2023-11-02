@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum FileType: String, Codable {
+
 	case image, video, file
 	
 	var icon: UIImage {

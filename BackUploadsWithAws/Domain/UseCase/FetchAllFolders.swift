@@ -8,6 +8,7 @@
 import Foundation
 
 protocol FetchAllFolders {
+	
 	func execute() -> [ChatFolder]
 }
 

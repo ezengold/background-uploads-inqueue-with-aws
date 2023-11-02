@@ -11,9 +11,13 @@ import YPImagePicker
 struct PreviewElement: Identifiable, Equatable {
 	
 	let id: String = UUID().uuidString
+	
 	var type: FileType
+	
 	var imageData: YPMediaPhoto?
+	
 	var videoData: YPMediaVideo?
+	
 	var fileData: URL?
 	
 	static func == (lhs: PreviewElement, rhs: PreviewElement) -> Bool {

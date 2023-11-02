@@ -10,8 +10,11 @@ import UIKit
 import SwiftUI
 
 struct AlertButton {
+	
 	var title: String
+	
 	var style: UIAlertAction.Style = .default
+	
 	var action: ((UIAlertAction) -> Void)?
 	
 	static let OKAY = AlertButton(title: "Okay")
@@ -114,7 +117,9 @@ extension UIFont {
 extension Color {
 	
 	static let appPrincipal: Color = Color("AccentColor")
+	
 	static let appDarkGray: Color = Color(red: 63/255, green: 63/255, blue: 63/255)
+	
 	static let appFileBack: Color = Color(red: 141/255, green: 149/255, blue: 166/255)
 }
 
@@ -136,5 +141,24 @@ extension Date {
 		dateFormatter.dateStyle = .medium
 		dateFormatter.timeStyle = .short
 		return dateFormatter.string(from: self)
+	}
+}
+
+extension UIApplication {
+	
+	class func getPresentedViewController() -> UIViewController? {
+
+		var presentViewController = UIApplication
+			.shared
+			.connectedScenes
+			.compactMap { $0 as? UIWindowScene }
+			.flatMap { $0.windows }
+			.last { $0.isKeyWindow }?.rootViewController
+
+		while let pVC = presentViewController?.presentedViewController {
+			presentViewController = pVC
+		}
+		
+		return presentViewController
 	}
 }

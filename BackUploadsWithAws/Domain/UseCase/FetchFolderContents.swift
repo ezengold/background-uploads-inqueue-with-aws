@@ -8,6 +8,7 @@
 import Foundation
 
 protocol FetchFolderContents {
+
 	func execute(forId folderId: String) async -> Result<ChatFolder, ApiError>
 }
 

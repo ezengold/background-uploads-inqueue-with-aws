@@ -17,6 +17,7 @@ struct DeleteAnUploadFileUseCase: DeleteAnUploadFile {
 	var api: ChatFolderApi
 	
 	func execute(forFileId: String) throws {
+
 		try api.deleteFile(ofId: forFileId)
 	}
 }

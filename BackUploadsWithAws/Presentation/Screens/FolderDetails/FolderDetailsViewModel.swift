@@ -75,7 +75,8 @@ class FolderDetailsViewModel: ObservableObject {
 			case .video:
 				let sourceUrl = item.videoData!.url
 				let finalFileName = "\(item.id).\(sourceUrl.pathExtension)"
-				if let fileUrl = UploadService.getPermanentUrl(sourceUrl, usingName: finalFileName) {
+
+				if let fileUrl = UploadService.getPermanentUrl(sourceUrl, usingName: finalFileName, fileType: .video) {
 					uploadFile = UploadFile(
 						id: item.id,
 						s3UploadKey: finalFileName,
@@ -98,7 +99,8 @@ class FolderDetailsViewModel: ObservableObject {
 			case .file:
 				let sourceUrl = item.fileData!
 				let finalFileName = "\(item.id).\(sourceUrl.pathExtension)"
-				if let fileUrl = UploadService.getPermanentUrl(sourceUrl, usingName: finalFileName) {
+
+				if let fileUrl = UploadService.getPermanentUrl(sourceUrl, usingName: finalFileName, fileType: .file) {
 					uploadFile = UploadFile(
 						id: item.id,
 						s3UploadKey: finalFileName,
@@ -131,6 +133,7 @@ class FolderDetailsViewModel: ObservableObject {
 		}
 		
 		UploadService.shared.addMultipleUploadOperations(filesToUpload)
+
 		self.folder.contents = updatedFolderContents
 		
 		self.updateFolder()
@@ -193,7 +196,7 @@ class FolderDetailsViewModel: ObservableObject {
 	}
 	
 	func handleDeleteFile(_ file: ChatFile) {
-		
+
 		self.host.alert(
 			message: "Do you really want to delete this file ?",
 			buttons: [

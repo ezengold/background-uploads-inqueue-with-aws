@@ -11,6 +11,8 @@ import AWSS3
 final class UploadService {
 	
 	static let shared = UploadService()
+
+	static let UPLOAD_TEMP_PATH: String = "uploads"
 	
 	@Published var hasNoOngoingUploads: Bool = true
 	
@@ -25,9 +27,10 @@ final class UploadService {
 	
 	private var isUploading: Bool = false
 	
-	private var queue = [UploadFile]()
-	
 	var delegate: UploadTaskDelegate?
+	
+	// MARK: - Queuing methods
+	private var queue = [UploadFile]()
 	
 	func addUploadOperation(_ file: UploadFile) {
 		self.queue.append(file)
@@ -64,15 +67,6 @@ final class UploadService {
 		self.saveQueue()
 	}
 	
-	func uploadThisFile(_ fileId: String) {
-		if let position = self.queue.firstIndex(where: { $0.id == fileId }) {
-			self.queue[position].status = .pending
-			self.saveQueue()
-			self.start()
-			self.delegate?.onStart(currentFile: self.queue[position])
-		}
-	}
-	
 	func saveQueue() {
 		do {
 			DispatchQueue.main.async {
@@ -93,6 +87,17 @@ final class UploadService {
 		}
 	}
 	
+	func uploadThisFile(_ fileId: String) {
+		if let position = self.queue.firstIndex(where: { $0.id == fileId }) {
+			self.queue[position].status = .pending
+			self.saveQueue()
+			self.start()
+			self.delegate?.onStart(currentFile: self.queue[position])
+		}
+	}
+	
+	// MARK: - Main methods
+	
 	func startOnLaunch() {
 		self.queue = self.queue.map({ file in
 			var copy = file
@@ -106,14 +111,20 @@ final class UploadService {
 	func start() {
 		if !self.isUploading {
 			if let nextUploadFile = self.nextFile(), let safeFileUrl = nextUploadFile.getActualUrl() {
-				guard let currentIndex = self.queue.firstIndex(where: { $0.s3UploadKey == nextUploadFile.s3UploadKey }) else { return }
+				guard let currentIndex = self.queue.firstIndex(where: { 
+					$0.s3UploadKey == nextUploadFile.s3UploadKey
+				}) else { return }
 				
 				let expression = AWSS3TransferUtilityUploadExpression()
 				expression.setValue("public-read", forRequestHeader: "x-amz-acl")
 				
 				expression.progressBlock = { task, progress in
 					self.queue[currentIndex].progress = (progress.fractionCompleted * 100.0).toPercentage()
-					self.delegate?.onProgressing(currentFile: self.queue[currentIndex], progressionInPercentage: (progress.fractionCompleted * 100.0).toPercentage(), uploadTask: task)
+					self.delegate?.onProgressing(
+						currentFile: self.queue[currentIndex],
+						progressionInPercentage: (progress.fractionCompleted * 100.0).toPercentage(),
+						uploadTask: task
+					)
 				}
 				
 				self.queue[currentIndex].progress = 0.0
@@ -131,6 +142,7 @@ final class UploadService {
 					contentType: nextUploadFile.contentType.contentTypeOf(fileWithExtension: nextUploadFile.fileUrl?.pathExtension ?? ""),
 					expression: expression,
 					completionHandler: { task, error in
+						
 						if error == nil {
 							self.isUploading = false
 							
@@ -172,7 +184,7 @@ final class UploadService {
 										}
 									}
 								} else {
-									debugPrint("An error occured while posting") // Display an alert if wanted
+									UIApplication.getPresentedViewController()?.toast("An error occured while posting")
 									
 									// set error on file
 									self.queue[currentIndex] = finalFile
@@ -244,6 +256,7 @@ final class UploadService {
 	
 	// MARK: - Class methods
 	static func initialize() {
+
 		guard let jsonString = UserDefaults.standard.string(forKey: Constants.UPLOAD_QUEUE_PREFS_STATE_KEY) else { return }
 		
 		guard let jsonData = jsonString.data(using: .utf8) else { return }
@@ -277,7 +290,8 @@ final class UploadService {
 		}
 	}
 	
-	static func getPermanentUrl(_ url: URL, usingName fileName: String) -> URL? {
+	static func getPermanentUrl(_ url: URL, usingName fileName: String, fileType type: FileType) -> URL? {
+		
 		do {
 			guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
 				return nil
@@ -285,18 +299,28 @@ final class UploadService {
 			
 			try UploadService.createUploadsDirectoryIfNoExists()
 			
-			let dirPathString = documentsDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+			let dirPathString = documentsDirectory.appendingPathComponent(UploadService.UPLOAD_TEMP_PATH)
 
 			let permanentURL = dirPathString.appendingPathComponent(fileName)
 			
-			if url.startAccessingSecurityScopedResource() {
-				try FileManager.default.copyItem(at: url, to: permanentURL)
+			// Files are picked from the Files explorer, and access should be granted before
+			if type == .file {
 				
-				url.stopAccessingSecurityScopedResource()
+				if url.startAccessingSecurityScopedResource() {
+					try FileManager.default.copyItem(at: url, to: permanentURL)
+					
+					url.stopAccessingSecurityScopedResource()
+					
+					return permanentURL
+				} else {
+					return nil
+				}
+			} else {
+				
+				// Videos are already copied to a temporary directory while picking with YPImagePicker. We move it to the uploads directory
+				try FileManager.default.moveItem(at: url, to: permanentURL)
 				
 				return permanentURL
-			} else {
-				return nil
 			}
 		} catch {
 			return nil
@@ -304,6 +328,7 @@ final class UploadService {
 	}
 	
 	static func getPermanentUrl(_ image: UIImage, usingName fileName: String) -> URL? {
+		
 		do {
 			guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
 				return nil
@@ -311,7 +336,7 @@ final class UploadService {
 			
 			try UploadService.createUploadsDirectoryIfNoExists()
 			
-			let dirPathString = documentsDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+			let dirPathString = documentsDirectory.appendingPathComponent(UploadService.UPLOAD_TEMP_PATH)
 			let permanentURL = dirPathString.appendingPathComponent(fileName)
 			
 			guard let imageData = image.jpegData(compressionQuality: 1.0) else {
@@ -329,14 +354,14 @@ final class UploadService {
 	static func createUploadsDirectoryIfNoExists() throws {
 		let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
 		let documentDirectory = paths.first! as NSString
-		let dirPathString = documentDirectory.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+		let dirPathString = documentDirectory.appendingPathComponent(UploadService.UPLOAD_TEMP_PATH)
 
 		try FileManager.default.createDirectory(atPath: dirPathString, withIntermediateDirectories: true, attributes:nil)
 	}
 	
 	static func isInUploadsDirectory(_ file: UploadFile) -> Bool {
 		let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
-		let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+		let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(UploadService.UPLOAD_TEMP_PATH)
 		let checkingURL = dirFolderUrl.appendingPathComponent(file.getFileName())
 		
 		var checkingPath = ""
@@ -355,7 +380,7 @@ final class UploadService {
 			do {
 				let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
 				
-				let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+				let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(UploadService.UPLOAD_TEMP_PATH)
 				
 				let finalURL = dirFolderUrl.appendingPathComponent(file.getFileName())
 				

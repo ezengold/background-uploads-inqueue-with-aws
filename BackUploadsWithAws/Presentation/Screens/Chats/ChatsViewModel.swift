@@ -14,12 +14,6 @@ class ChatsViewModel: ObservableObject {
 	
 	// MARK: Use cases
 	var fetchFoldersUseCase = FetchAllFoldersUseCase(api: ChatFolderApi.shared)
-
-	var searchFoldersUseCase = SearchFoldersUseCase(api: ChatFolderApi.shared)
-	
-	@Published var keywords: String = "" {
-		didSet { filterData() }
-	}
 	
 	@Published var data: [ChatFolder] = []
 	
@@ -35,11 +29,6 @@ class ChatsViewModel: ObservableObject {
 	func fetchAllData() {
 
 		self.data = fetchFoldersUseCase.execute()
-	}
-	
-	private func filterData() {
-
-		self.data = searchFoldersUseCase.execute(with: self.keywords)
 	}
 	
 	func viewDetails(of item: ChatFolder) {

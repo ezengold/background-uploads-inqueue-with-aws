@@ -13,6 +13,9 @@ struct UploadFile: Codable, Equatable {
 	
 	var s3UploadKey: String
 	
+	/**
+	 URL of the file to inside directory `UploadService.UPLOAD_TEMP_PATH`
+	 */
 	var fileUrl: URL?
 	
 	var contentType: FileType
@@ -23,6 +26,9 @@ struct UploadFile: Codable, Equatable {
 	
 	var status: TaskStatus = .pending
 	
+	/**
+	 Link to the file from AWS after the upload is successfully completed
+	 */
 	var publicUrl: String = ""
 	
 	var error: String?
@@ -38,9 +44,12 @@ struct UploadFile: Codable, Equatable {
 		return expiryDate < Date()
 	}
 	
+	/**
+	 The URL of the file has to be refetch relatively from Document directory because the runtine `documentDirectory` value can change
+	 */
 	func getActualUrl() -> URL? {
 		let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
-		let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(Constants.UPLOAD_TEMP_PATH)
+		let dirFolderUrl = documentsDirectoryURL.appendingPathComponent(UploadService.UPLOAD_TEMP_PATH)
 		let actualURL = dirFolderUrl.appendingPathComponent(self.getFileName())
 
 		return actualURL

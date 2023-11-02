@@ -8,8 +8,11 @@
 import Foundation
 
 struct ChatFolder: Codable, Identifiable, Equatable {
+	
 	let id: String
+	
 	let folderName: String
+	
 	var contents: [ChatFile]
 	
 	func getLastestChangeDate() -> Date? {

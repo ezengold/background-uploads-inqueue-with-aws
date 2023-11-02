@@ -10,8 +10,6 @@ import Combine
 
 class ChatsViewController: UIViewController {
 	
-	private var searchController = UISearchController(searchResultsController: nil)
-	
 	private var statusChip = UIView(frame: CGRect(x: 27, y: 5, width: 5, height: 5))
 	
 	var vm: ChatsViewModel!
@@ -80,7 +78,7 @@ class ChatsViewController: UIViewController {
 			image: UIImage(systemName: "magnifyingglass"),
 			style: .plain,
 			target: self,
-			action: #selector(self.onSearch)
+			action: nil
 		)
 		searchItem.tintColor = UIColor.black
 		
@@ -88,29 +86,6 @@ class ChatsViewController: UIViewController {
 			UIBarButtonItem(customView: uploadsIcon),
 			searchItem
 		]
-		
-		// Search bar
-		searchController = UISearchController(searchResultsController: nil)
-		
-		searchController.searchBar.searchBarStyle = .minimal
-		searchController.searchBar.tintColor = .black
-		searchController.searchBar.barStyle = .default
-		searchController.definesPresentationContext = true
-		
-		let searchBarTextField = searchController.searchBar.value(forKey: "searchBarTextField") as! UITextField
-		let imageView = UIImageView(frame: CGRect(x: 25, y: 25, width: 25, height: 25))
-		imageView.image = UIImage(systemName: "magnifyingglass")!
-		searchBarTextField.leftView = imageView
-		searchBarTextField.leftView?.tintColor = UIColor.black
-		
-		searchBarTextField.font = .appRegularFont(ofSize: 13)
-		searchBarTextField.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [
-			.font: UIFont.appRegularFont(ofSize: 13),
-			.foregroundColor: UIColor.black
-		])
-		
-		self.navigationItem.searchController = searchController
-		searchController.searchBar.delegate = self
 	}
 	
 	@objc
@@ -123,26 +98,6 @@ class ChatsViewController: UIViewController {
 	func onViewUploads() {
 
 		self.showOngoingUploads()
-	}
-	
-	@objc
-	func onSearch() {
-
-		self.searchController.searchBar.becomeFirstResponder()
-	}
-}
-
-extension ChatsViewController: UISearchBarDelegate {
-
-	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-
-		searchBar.resignFirstResponder()
-	}
-	
-	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		DispatchQueue.main.async {
-			self.vm.keywords = searchText			
-		}
 	}
 }
 
