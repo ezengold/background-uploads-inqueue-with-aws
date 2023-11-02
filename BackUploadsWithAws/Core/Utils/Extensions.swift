@@ -130,4 +130,11 @@ extension Date {
 		dateFormatter.dateFormat = format
 		return dateFormatter.string(from: self)
 	}
+	
+	func toString() -> String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateStyle = .medium
+		dateFormatter.timeStyle = .short
+		return dateFormatter.string(from: self)
+	}
 }

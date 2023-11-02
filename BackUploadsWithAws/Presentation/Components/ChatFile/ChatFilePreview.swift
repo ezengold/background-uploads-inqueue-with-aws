@@ -22,7 +22,7 @@ struct ChatFilePreview: View {
 						.font(.appBoldFont(ofSize: 15))
 						.foregroundColor(.black)
 						.frame(maxWidth: .infinity, alignment: .leading)
-					Text("Added : \(file.addedAt.toFormat("yyyy-MM-dd [at] HH:mm"))")
+					Text("Added : \(file.addedAt.toString())")
 						.font(.appRegularFont(ofSize: 14))
 						.foregroundColor(.appDarkGray)
 						.frame(maxWidth: .infinity, alignment: .leading)

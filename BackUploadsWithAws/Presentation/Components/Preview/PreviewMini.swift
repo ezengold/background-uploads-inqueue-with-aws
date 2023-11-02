@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PreviewMini: View {
 	
-	@State var item: PreviewElement
+	@Binding var item: PreviewElement
 	
 	@Binding var isActive: Bool
 	
@@ -98,13 +98,10 @@ struct PreviewMini: View {
 	}
 }
 
-struct PreviewMini_Previews: PreviewProvider {
-	
-    static var previews: some View {
-		PreviewMini(
-			item: PreviewElement(type: .file),
-			isActive: .constant(true)
-		)
-		.previewLayout(.sizeThatFits)
-    }
+#Preview {
+	PreviewMini(
+		item: .constant(PreviewElement(type: .file)),
+		isActive: .constant(true)
+	)
+	.previewLayout(.sizeThatFits)
 }

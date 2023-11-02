@@ -31,7 +31,5 @@ class S3Keys {
 		let configs = AWSServiceConfiguration(region: .EUWest3, credentialsProvider: provider)
 		
 		AWSServiceManager.default().defaultServiceConfiguration = configs
-		
-		// TODO: Trigger uploads in queue on launch
 	}
 }

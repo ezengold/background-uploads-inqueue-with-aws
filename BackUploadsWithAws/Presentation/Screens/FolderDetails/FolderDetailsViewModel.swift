@@ -121,13 +121,13 @@ class FolderDetailsViewModel: ObservableObject {
 			
 			filesToUpload.append(uploadFile)
 
-			updatedFolderContents.append(ChatFile(
+			updatedFolderContents.insert(ChatFile(
 				id: item.id,
 				file: uploadFile,
 				addedAt: Date(),
 				isUploaded: false,
 				thumbData: item.type == .video ? (item.videoData?.thumbnail.jpegData(compressionQuality: 1.0)) : nil
-			))
+			), at: 0)
 		}
 		
 		UploadService.shared.addMultipleUploadOperations(filesToUpload)
@@ -135,10 +135,13 @@ class FolderDetailsViewModel: ObservableObject {
 		
 		self.updateFolder()
 		
+		NotificationCenter.default.post(name: .refreshChats, object: nil)
+		
 		UploadService.shared.start()
 	}
 	
 	func fetchFolderContents() {
+
 		DispatchQueue.main.async {
 			self.isLoading = true
 		}
@@ -153,7 +156,18 @@ class FolderDetailsViewModel: ObservableObject {
 			switch result {
 			case .success(let folderDetails):
 				DispatchQueue.main.async {
-					self.folder = folderDetails
+					var refreshedFolder = folderDetails
+					refreshedFolder.contents = refreshedFolder.contents.map({ ctnt in
+						if let indexInQueue = UploadService.shared.getQueue().firstIndex(where: { fl in fl == ctnt.file }) {
+							var updated = ctnt
+							updated.file = UploadService.shared.getQueue()[indexInQueue]
+							return updated
+						} else {
+							return ctnt
+						}
+					})
+					self.folder = refreshedFolder
+					self.updateFolder()
 				}
 				
 			case .failure(let error):
@@ -165,31 +179,32 @@ class FolderDetailsViewModel: ObservableObject {
 	}
 	
 	func updateFolder() {
-		Task(priority: .high) {
-			do {
-				try await updateFolderUseCase.execute(forFolder: self.folder)
-			} catch {
-				await self.host.toast(error.localizedDescription)
-			}
+		
+		do {
+			try updateFolderUseCase.execute(forFolder: self.folder)
+		} catch {
+			self.host.toast(error.localizedDescription)
 		}
 	}
 	
 	func handleRefreshFile(_ file: ChatFile) {
-		//
+		
+		UploadService.shared.uploadThisFile(file.file.id)
 	}
 	
 	func handleDeleteFile(_ file: ChatFile) {
-		print(file)
-//		self.host.alert(
-//			message: "Do you really want to delete this file ?",
-//			buttons: [
-//				.init(title: "No", style: .cancel),
-//				.init(title: "Yes", style: .destructive, action: { _ in
-//					UploadService.shared.removeFromQueue(file.file.id)
-//					self.folder.contents.removeAll(where: { $0 == file })
-//					self.updateFolder()
-//				})
-//			]
-//		)
+		
+		self.host.alert(
+			message: "Do you really want to delete this file ?",
+			buttons: [
+				.init(title: "No", style: .cancel),
+				.init(title: "Yes", style: .destructive, action: { _ in
+					UploadService.shared.removeFromQueue(file.file.id)
+					self.folder.contents.removeAll(where: { $0 == file })
+					self.updateFolder()
+					NotificationCenter.default.post(name: .refreshChats, object: nil)
+				})
+			]
+		)
 	}
 }

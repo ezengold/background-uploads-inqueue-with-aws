@@ -13,8 +13,6 @@ import AWSS3
 
 class FolderDetailsViewController: UIViewController {
 	
-	private var searchController = UISearchController(searchResultsController: nil)
-	
 	var vm: FolderDetailsViewModel!
 	
 	var folder: ChatFolder!

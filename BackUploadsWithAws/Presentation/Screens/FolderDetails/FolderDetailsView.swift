@@ -46,9 +46,6 @@ struct FolderDetailsView: View {
 	}
 }
 
-struct FolderDetailsView_Previews: PreviewProvider {
-
-    static var previews: some View {
-		FolderDetailsView(vm: FolderDetailsViewModel(host: UIViewController(), withFolder: .DUMMY_FOLDER))
-    }
+#Preview {
+	FolderDetailsView(vm: FolderDetailsViewModel(host: UIViewController(), withFolder: .DUMMY_FOLDER))
 }

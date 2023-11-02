@@ -30,7 +30,7 @@ struct ChatFileLoadingPreview: View {
 						.frame(width: 25, height: 25)
 				}
 				if file.file.status == .error {
-					Text("Failed due to such reason")
+					Text(file.file.error ?? "")
 						.font(.appRegularFont(ofSize: 14))
 						.foregroundColor(.red)
 				}
@@ -38,7 +38,7 @@ struct ChatFileLoadingPreview: View {
 					ProgressView(value: (file.file.progress / 100.0))
 						.accentColor(.appPrincipal)
 				}
-				Text("Added : \(file.addedAt.toFormat("yyyy-MM-dd [at] HH:mm"))")
+				Text("Added : \(file.addedAt.toString())")
 					.font(.appRegularFont(ofSize: 14))
 					.foregroundColor(.appDarkGray)
 			}
@@ -51,7 +51,7 @@ struct ChatFileLoadingPreview: View {
 				if file.file.status == .error && UploadService.isInUploadsDirectory(file.file) {
 					Image(systemName: "arrow.clockwise")
 						.resizable()
-						.foregroundColor(.appPrincipal)
+						.foregroundColor(.white)
 						.scaledToFit()
 						.frame(width: 25, height: 25)
 						.onTapGesture {

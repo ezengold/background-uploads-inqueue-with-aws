@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 class ChatsViewController: UIViewController {
 	
@@ -14,6 +15,8 @@ class ChatsViewController: UIViewController {
 	private var statusChip = UIView(frame: CGRect(x: 27, y: 5, width: 5, height: 5))
 	
 	var vm: ChatsViewModel!
+	
+	private var subscribers = Set<AnyCancellable>()
 
 	override func viewDidLoad() {
 
@@ -63,10 +66,15 @@ class ChatsViewController: UIViewController {
 		uploadsIcon.tintColor = .appPrincipal
 		uploadsIcon.addTarget(self, action: #selector(onViewUploads), for: .touchUpInside)
 		
-		statusChip.layer.backgroundColor = UIColor.orange.cgColor // TODO: Use clear color when no upload
+		statusChip.layer.backgroundColor = UIColor.orange.cgColor
 		statusChip.layer.cornerRadius = statusChip.bounds.size.height / 2
 		statusChip.layer.masksToBounds = true
 		uploadsIcon.addSubview(statusChip)
+		
+		UploadService.shared.$hasNoOngoingUploads
+			.receive(on: DispatchQueue.main)
+			.assign(to: \.isHidden, on: statusChip)
+			.store(in: &subscribers)
 		
 		let searchItem = UIBarButtonItem(
 			image: UIImage(systemName: "magnifyingglass"),
@@ -132,63 +140,57 @@ extension ChatsViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-		self.vm.keywords = searchText
-	}
-}
-
-struct ChatsView: View {
-
-	@StateObject var vm: ChatsViewModel
-	
-	var body: some View {
-		if vm.isLoading {
-			ProgressView()
-		} else {
-			ScrollView {
-				LazyVStack(spacing: 15) {
-					ForEach(vm.data, id: \.id) { item in
-						VStack(alignment: .leading, spacing: 10) {
-							Text(item.folderName)
-								.font(.appBoldFont(ofSize: 17))
-								.foregroundColor(.appPrincipal)
-							Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) asset\(item.contents.count > 1 ? "s" : "")")
-								.font(.appRegularFont(ofSize: 15))
-								.foregroundColor(.black)
-								.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-							if let lastUpdate = item.getLastestChangeDate() {
-								Text("Last update : \(lastUpdate.toFormat("yyyy-MM-dd [at] HH:mm"))")
-									.font(.appRegularFont(ofSize: 13))
-									.foregroundColor(.appDarkGray)
-									.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
-							} else {
-								Text("No change occured in a while")
-									.font(.appRegularFont(ofSize: 13))
-									.foregroundColor(.appDarkGray)
-									.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
-							}
-						}
-						.padding(10)
-						.background(Color.white)
-						.cornerRadius(7)
-						.clipped()
-						.shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 1)
-						.onTapGesture {
-							vm.viewDetails(of: item)
-						}
-					}
-				}
-				.padding(.horizontal, 15)
-				.padding(.top, 20)
-				.padding(.bottom, 100)
-			}
+		DispatchQueue.main.async {
+			self.vm.keywords = searchText			
 		}
 	}
 }
 
-struct ChatsView_Previews: PreviewProvider {
+struct ChatsView: View {
+	
+	@StateObject var vm: ChatsViewModel
+	
+	var body: some View {
+		ScrollView {
+			LazyVStack(spacing: 15) {
+				ForEach(vm.data, id: \.id) { item in
+					VStack(alignment: .leading, spacing: 10) {
+						Text(item.folderName)
+							.font(.appBoldFont(ofSize: 17))
+							.foregroundColor(.appPrincipal)
+						Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) asset\(item.contents.count > 1 ? "s" : "")")
+							.font(.appRegularFont(ofSize: 15))
+							.foregroundColor(.black)
+							.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+						if let lastUpdate = item.getLastestChangeDate() {
+							Text("Last update : \(lastUpdate.toString())")
+								.font(.appRegularFont(ofSize: 13))
+								.foregroundColor(.appDarkGray)
+								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+						} else {
+							Text("No change occured in a while")
+								.font(.appRegularFont(ofSize: 13))
+								.foregroundColor(.appDarkGray)
+								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+						}
+					}
+					.padding(10)
+					.background(Color.white)
+					.cornerRadius(7)
+					.clipped()
+					.shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 1)
+					.onTapGesture {
+						vm.viewDetails(of: item)
+					}
+				}
+			}
+			.padding(.horizontal, 15)
+			.padding(.top, 20)
+			.padding(.bottom, 100)
+		}
+	}
+}
 
-    static var previews: some View {
-        ChatsView(vm: ChatsViewModel(host: UIViewController()))
-    }
+#Preview {
+	ChatsView(vm: ChatsViewModel(host: UIViewController()))
 }

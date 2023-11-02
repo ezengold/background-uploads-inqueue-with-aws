@@ -23,9 +23,6 @@ struct ImagePreview: View {
     }
 }
 
-struct ImagePreview_Previews: PreviewProvider {
-
-    static var previews: some View {
-		ImagePreview(image: .constant(#imageLiteral(resourceName: "reiner")))
-    }
+#Preview {
+	ImagePreview(image: .constant(#imageLiteral(resourceName: "reiner")))
 }

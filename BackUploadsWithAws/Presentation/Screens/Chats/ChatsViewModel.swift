@@ -12,8 +12,6 @@ class ChatsViewModel: ObservableObject {
 
 	var host: ChatsViewController
 	
-	@Published var isLoading: Bool = true
-	
 	// MARK: Use cases
 	var fetchFoldersUseCase = FetchAllFoldersUseCase(api: ChatFolderApi.shared)
 
@@ -35,30 +33,8 @@ class ChatsViewModel: ObservableObject {
 	}
 	
 	func fetchAllData() {
-		DispatchQueue.main.async {
-			self.isLoading = true
-		}
 
-		Task {
-			let result = await fetchFoldersUseCase.execute()
-			
-			DispatchQueue.main.async {
-				self.isLoading = false
-			}
-
-			switch result {
-			case .success(let matches):
-				DispatchQueue.main.async {
-					self.data = matches
-				}
-				
-			case .failure(let error):
-				DispatchQueue.main.async {
-					self.host.toast(error.message)
-					self.data = []
-				}
-			}
-		}
+		self.data = fetchFoldersUseCase.execute()
 	}
 	
 	private func filterData() {

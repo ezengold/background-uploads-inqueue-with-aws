@@ -50,7 +50,7 @@ struct AssetsPreviewView: View {
 	var body: some View {
 		VStack(spacing: 15) {
 			if vm.isFilePreview {
-				FilePreview(files: .constant(vm.items))
+				FilePreview(files: $vm.items)
 					.padding(.horizontal, 15)
 					.padding(.top, 15)
 			} else {
@@ -75,12 +75,12 @@ struct AssetsPreviewView: View {
 			if !vm.isFilePreview {
 				ScrollView(.horizontal, showsIndicators: false) {
 					HStack(alignment: .center, spacing: 15) {
-						ForEach(vm.items) { item in
+						ForEach($vm.items) { item in
 							PreviewMini(
 								item: item,
-								isActive: .constant(vm.currentItem == item)
+								isActive: .constant(vm.currentItem == item.wrappedValue)
 							) {
-								vm.viewFully(item: item)
+								vm.viewFully(item: item.wrappedValue)
 							}
 						}
 					}
@@ -124,9 +124,6 @@ struct AssetsPreviewView: View {
 	}
 }
 
-struct AssetsPreviewView_Previews: PreviewProvider {
-	
-	static var previews: some View {
-		AssetsPreviewView(vm: AssetsPreviewViewModel(host: UIViewController(), withItems: []))
-	}
+#Preview {
+	AssetsPreviewView(vm: AssetsPreviewViewModel(host: UIViewController(), withItems: []))
 }

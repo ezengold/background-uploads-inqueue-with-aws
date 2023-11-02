@@ -18,7 +18,7 @@ struct FetchFolderContentsUseCase: FetchFolderContents {
 	func execute(forId folderId: String) async -> Result<ChatFolder, ApiError> {
 		
 		do {
-			if let result = try await api.getFolder(ofId: folderId) {
+			if let result = try api.getFolder(ofId: folderId) {
 				return .success(result)
 			} else {
 				return .failure(ApiError(

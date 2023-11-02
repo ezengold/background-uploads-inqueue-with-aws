@@ -27,9 +27,6 @@ struct VideoPreview: View {
     }
 }
 
-struct VideoPreview_Previews: PreviewProvider {
-
-    static var previews: some View {
-		VideoPreview(player: .constant(AVPlayer(url: Resources.dummyVideo)))
-    }
+#Preview {
+	VideoPreview(player: .constant(AVPlayer(url: Resources.dummyVideo)))
 }

@@ -69,9 +69,6 @@ struct FilePreview: View {
     }
 }
 
-struct FilePreview_Previews: PreviewProvider {
-
-    static var previews: some View {
-		FilePreview(files: .constant([]))
-    }
+#Preview {
+	FilePreview(files: .constant([]))
 }
