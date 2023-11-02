@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import Combine
 
 class ChatsViewController: UIViewController {
-	
-	private var searchController = UISearchController(searchResultsController: nil)
 	
 	private var statusChip = UIView(frame: CGRect(x: 27, y: 5, width: 5, height: 5))
 	
 	var vm: ChatsViewModel!
+	
+	private var subscribers = Set<AnyCancellable>()
 
 	override func viewDidLoad() {
 
@@ -40,6 +41,15 @@ class ChatsViewController: UIViewController {
 		])
 		
 		self.hideKeyboardWhenTappedAround()
+		
+		self.vm.fetchAllData()
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleRefresh),
+			name: .refreshChats,
+			object: nil
+		)
 	}
 	
 	private func setupNavBar() {
@@ -54,16 +64,21 @@ class ChatsViewController: UIViewController {
 		uploadsIcon.tintColor = .appPrincipal
 		uploadsIcon.addTarget(self, action: #selector(onViewUploads), for: .touchUpInside)
 		
-		statusChip.layer.backgroundColor = UIColor.orange.cgColor // TODO: Use clear color when no upload
+		statusChip.layer.backgroundColor = UIColor.orange.cgColor
 		statusChip.layer.cornerRadius = statusChip.bounds.size.height / 2
 		statusChip.layer.masksToBounds = true
 		uploadsIcon.addSubview(statusChip)
+		
+		UploadService.shared.$hasNoOngoingUploads
+			.receive(on: DispatchQueue.main)
+			.assign(to: \.isHidden, on: statusChip)
+			.store(in: &subscribers)
 		
 		let searchItem = UIBarButtonItem(
 			image: UIImage(systemName: "magnifyingglass"),
 			style: .plain,
 			target: self,
-			action: #selector(self.onSearch)
+			action: nil
 		)
 		searchItem.tintColor = UIColor.black
 		
@@ -71,29 +86,12 @@ class ChatsViewController: UIViewController {
 			UIBarButtonItem(customView: uploadsIcon),
 			searchItem
 		]
-		
-		// Search bar
-		searchController = UISearchController(searchResultsController: nil)
-		
-		searchController.searchBar.searchBarStyle = .minimal
-		searchController.searchBar.tintColor = .black
-		searchController.searchBar.barStyle = .default
-		searchController.definesPresentationContext = true
-		
-		let searchBarTextField = searchController.searchBar.value(forKey: "searchBarTextField") as! UITextField
-		let imageView = UIImageView(frame: CGRect(x: 25, y: 25, width: 25, height: 25))
-		imageView.image = UIImage(systemName: "magnifyingglass")!
-		searchBarTextField.leftView = imageView
-		searchBarTextField.leftView?.tintColor = UIColor.black
-		
-		searchBarTextField.font = .appRegularFont(ofSize: 13)
-		searchBarTextField.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [
-			.font: UIFont.appRegularFont(ofSize: 13),
-			.foregroundColor: UIColor.black
-		])
-		
-		self.navigationItem.searchController = searchController
-		searchController.searchBar.delegate = self
+	}
+	
+	@objc
+	func handleRefresh() {
+
+		self.vm.fetchAllData()
 	}
 	
 	@objc
@@ -101,29 +99,10 @@ class ChatsViewController: UIViewController {
 
 		self.showOngoingUploads()
 	}
-	
-	@objc
-	func onSearch() {
-
-		self.searchController.searchBar.becomeFirstResponder()
-	}
-}
-
-extension ChatsViewController: UISearchBarDelegate {
-
-	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-
-		searchBar.resignFirstResponder()
-	}
-	
-	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-		self.vm.keywords = searchText
-	}
 }
 
 struct ChatsView: View {
-
+	
 	@StateObject var vm: ChatsViewModel
 	
 	var body: some View {
@@ -139,7 +118,7 @@ struct ChatsView: View {
 							.foregroundColor(.black)
 							.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 						if let lastUpdate = item.getLastestChangeDate() {
-							Text("Last update : \(lastUpdate.toFormat("yyyy-MM-dd [at] HH:mm"))")
+							Text("Last update : \(lastUpdate.toString())")
 								.font(.appRegularFont(ofSize: 13))
 								.foregroundColor(.appDarkGray)
 								.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
@@ -163,16 +142,10 @@ struct ChatsView: View {
 			.padding(.horizontal, 15)
 			.padding(.top, 20)
 			.padding(.bottom, 100)
-			.onAppear {
-				vm.fetchAllData()
-			}
 		}
 	}
 }
 
-struct ChatsView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        ChatsView(vm: ChatsViewModel(host: UIViewController()))
-    }
+#Preview {
+	ChatsView(vm: ChatsViewModel(host: UIViewController()))
 }

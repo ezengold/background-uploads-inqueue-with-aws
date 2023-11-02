@@ -14,15 +14,18 @@ struct ChatFolderApi {
 	static var ALL_DATA = [ChatFolder]()
 	
 	// MARK: - Public methods
+	
+	static func initialize() {
 
-	func getAllFolders() async throws -> [ChatFolder] {
-		
-		if UserDefaults.standard.bool(forKey: Constants.FOLDERS_HAS_BEEN_SAVED_ONCE) {
-			ChatFolderApi.ALL_DATA = try self.loadFromStorage()
-		} else {
-			ChatFolderApi.ALL_DATA = try self.loadFromSourceFile()
+		do {
+			try ChatFolderApi.shared.fetchFromStorage()
+		} catch {
+			// Nothing to do
 		}
+	}
 
+	func getAllFolders() -> [ChatFolder] {
+		
 		return ChatFolderApi.ALL_DATA
 	}
 	
@@ -39,14 +42,14 @@ struct ChatFolderApi {
 		}
 	}
 	
-	func getFolder(ofId folderId: String) async throws -> ChatFolder? {
+	func getFolder(ofId folderId: String) throws -> ChatFolder? {
 		
-		let _ = try await self.getAllFolders()
+		try self.fetchFromStorage()
 		
 		return ChatFolderApi.ALL_DATA.first(where: { $0.id == folderId })
 	}
 	
-	func updateFolder(ofId folderId: String, with data: ChatFolder) async throws {
+	func updateFolder(ofId folderId: String, with data: ChatFolder) throws {
 		
 		guard let folderIndex = ChatFolderApi.ALL_DATA.firstIndex(where: { $0.id == folderId }) else {
 			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve folder of id : [\(folderId)]", code: 404))
@@ -57,10 +60,63 @@ struct ChatFolderApi {
 		try saveToStorage()
 	}
 	
+	func updateFile(ofId fileId: String, with data: UploadFile, shouldUpdateStatus shouldUpdate: Bool = false) throws {
+		guard let folderIndex = ChatFolderApi.ALL_DATA.firstIndex(
+			where: { fld in
+				fld.contents.contains(where: { 
+					$0.id == fileId
+				})
+			}
+		) else {
+			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve any folder containing a file of id : [\(fileId)]", code: 404))
+		}
+		
+		guard let fileIndexInFolder = ChatFolderApi.ALL_DATA[folderIndex].contents.firstIndex(where: { $0.id == fileId }) else {
+			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve any folder containing a file of id : [\(fileId)]", code: 404))
+		}
+
+		ChatFolderApi.ALL_DATA[folderIndex].contents[fileIndexInFolder].file = data
+		
+		if shouldUpdate {
+			ChatFolderApi.ALL_DATA[folderIndex].contents[fileIndexInFolder].isUploaded = data.status == .success
+		}
+
+		try saveToStorage()
+	}
+	
+	func deleteFile(ofId fileId: String) throws {
+		
+		guard let folderIndex = ChatFolderApi.ALL_DATA.firstIndex(
+			where: { fld in
+				fld.contents.contains(where: {
+					$0.id == fileId
+				})
+			}
+		) else {
+			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve any folder containing a file of id : [\(fileId)]", code: 404))
+		}
+		
+		guard let fileIndexInFolder = ChatFolderApi.ALL_DATA[folderIndex].contents.firstIndex(where: { $0.id == fileId }) else {
+			throw ApiError("Folder not found", error: NSError(domain: "Unable to resolve any folder containing a file of id : [\(fileId)]", code: 404))
+		}
+
+		ChatFolderApi.ALL_DATA[folderIndex].contents.remove(at: fileIndexInFolder)
+
+		try saveToStorage()
+	}
+	
 	// MARK: - Private methods
 
 	private func saveToStorage() throws {
 		UserDefaults.standard.setValue(Helpers.stringify(json: ChatFolderApi.ALL_DATA), forKey: Constants.FOLDERS_SAVED)
+	}
+	
+	private func fetchFromStorage() throws {
+		if UserDefaults.standard.bool(forKey: Constants.FOLDERS_HAS_BEEN_SAVED_ONCE) {
+			ChatFolderApi.ALL_DATA = try ChatFolderApi.shared.loadFromStorage()
+		} else {
+			ChatFolderApi.ALL_DATA = try ChatFolderApi.shared.loadFromSourceFile()
+		}
 	}
 	
 	private func loadFromStorage() throws -> [ChatFolder] {
@@ -78,7 +134,7 @@ struct ChatFolderApi {
 	
 	private func loadFromSourceFile() throws -> [ChatFolder] {
 
-		guard let url = Bundle.main.url(forResource: "folders", withExtension: "json") else {
+		guard let url = Resources.dummyFolders else {
 			throw ApiError("Resource not found", error: NSError(domain: "Unable to resolve [folders.json]", code: 404))
 		}
 		

@@ -72,7 +72,13 @@ extension UIViewController {
 			
 			toastView.alpha = 0.0
 			
-			if let mainWindow = UIApplication.shared.keyWindow {
+			if let mainWindow = (
+				UIApplication
+					.shared
+					.connectedScenes.compactMap { $0 as? UIWindowScene }
+					.flatMap { $0.windows }
+					.last { $0.isKeyWindow }
+			) {
 				mainWindow.addSubview(toastView)
 				
 				toastView.translatesAutoresizingMaskIntoConstraints = false

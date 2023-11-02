@@ -24,7 +24,12 @@ extension UIViewController {
 		self.navigationController?.pushViewController(vc, animated: true)
 	}
 	
-	func previewPickedAssets(withItems items: [YPMediaItem]) {
-		// TODO: Create and navigate to preview screen
+	func previewPickedAssets(withItems items: [(FileType, Any)], onFinish: (([PreviewElement]) -> Void)?) {
+		lazy var vc = AssetsPreviewViewController()
+		vc.pickedItems = items
+		vc.onFinish = onFinish
+		vc.view.backgroundColor = .white
+		vc.modalPresentationStyle = .fullScreen
+		self.present(vc, animated: true)
 	}
 }

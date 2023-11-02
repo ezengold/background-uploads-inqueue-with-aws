@@ -8,6 +8,7 @@
 import Foundation
 
 protocol SearchFolders {
+	
 	func execute(with keywords: String) -> [ChatFolder]
 }
 

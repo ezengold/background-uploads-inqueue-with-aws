@@ -9,10 +9,9 @@ import UIKit
 import SwiftUI
 import YPImagePicker
 import AVFoundation
+import AWSS3
 
 class FolderDetailsViewController: UIViewController {
-	
-	private var searchController = UISearchController(searchResultsController: nil)
 	
 	var vm: FolderDetailsViewModel!
 	
@@ -45,6 +44,20 @@ class FolderDetailsViewController: UIViewController {
 		])
 		
 		self.hideKeyboardWhenTappedAround()
+		
+		self.vm.fetchFolderContents()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		UploadService.shared.delegate = self
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		UploadService.shared.delegate = nil
 	}
 	
 	private func setupNavBar() {
@@ -57,9 +70,7 @@ class FolderDetailsViewController: UIViewController {
 				children: [
 					UIAction(title: "Image", image: UIImage(named: "image-icon"), handler: self.pickImages),
 					UIAction(title: "Video", image: UIImage(named: "video-icon"), handler: self.pickVideos),
-					UIAction(title: "File", image: UIImage(systemName: "doc"), handler: { _ in
-						//
-					}),
+					UIAction(title: "File", image: UIImage(systemName: "doc"), handler: self.pickFiles),
 				]
 			)
 		)
@@ -81,7 +92,9 @@ extension FolderDetailsViewController {
 
 		vc.didFinishPicking { [unowned vc] items, cancelled in
 			vc.dismiss(animated: false) {
-				self.previewPickedAssets(withItems: items)
+				if !cancelled {
+					self.previewPickedAssets(withItems: items.map({ ( FileType.image, $0 ) }), onFinish: self.vm.startUploads)
+				}
 			}
 		}
 		self.present(vc, animated: true)
@@ -97,9 +110,20 @@ extension FolderDetailsViewController {
 
 		vc.didFinishPicking { [unowned vc] items, cancelled in
 			vc.dismiss(animated: false) {
-				self.previewPickedAssets(withItems: items)
+				if !cancelled {
+					self.previewPickedAssets(withItems: items.map({ ( FileType.video, $0 ) }), onFinish: self.vm.startUploads)
+				}
 			}
 		}
+		self.present(vc, animated: true)
+	}
+	
+	@objc
+	func pickFiles(_ action: UIAction) {
+		
+		lazy var vc = UIDocumentPickerViewController(forOpeningContentTypes: [.audio, .html, .javaScript, .json, .mp3, .pdf, .text, .zip])
+		vc.delegate = self
+		vc.allowsMultipleSelection = true
 		self.present(vc, animated: true)
 	}
 	
@@ -155,5 +179,55 @@ extension FolderDetailsViewController {
 		config.video.fileType = .mp4
 		config.library.mediaType = .video
 		config.library.isSquareByDefault = false
+		config.library.defaultMultipleSelection = true
+		config.library.preSelectItemOnMultipleSelection = false
+	}
+}
+
+// MARK: - Document Picker delegate methods
+extension FolderDetailsViewController: UIDocumentPickerDelegate {
+	
+	func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+
+		self.previewPickedAssets(withItems: urls.map({ ( FileType.file, $0 ) }), onFinish: self.vm.startUploads)
+	}
+}
+
+// MARK: - Handle upload service delegations methods
+extension FolderDetailsViewController: UploadTaskDelegate {
+
+	func onStart(currentFile file: UploadFile) {
+		DispatchQueue.main.async {
+			if let indexInContents = self.vm.folder.contents.firstIndex(where: { $0.file == file }) {
+				self.vm.folder.contents[indexInContents].file = file
+			}
+		}
+	}
+	
+	func onProgressing(currentFile file: UploadFile, progressionInPercentage progress: Double, uploadTask task: AWSS3TransferUtilityTask) {
+		DispatchQueue.main.async {
+			if let indexInContents = self.vm.folder.contents.firstIndex(where: { $0.file == file }) {
+				self.vm.folder.contents[indexInContents].file = file
+			}
+		}
+	}
+	
+	func onCompleted(finalFile file: UploadFile, uploadTask task: AWSS3TransferUtilityTask, canContinue onContinue: @escaping ((Bool) -> Void)) {
+		if self.vm.folder.contents.contains(where: { $0.file == file }) {
+			DispatchQueue.main.async {
+				self.vm.fetchFolderContents()
+			}
+			onContinue(true)
+		} else {
+			onContinue(true)
+		}
+	}
+	
+	func onError(currentFile file: UploadFile, errorEncountered error: Error?, uploadTask task: AWSS3TransferUtilityTask?) {
+		DispatchQueue.main.async {
+			if let indexInContents = self.vm.folder.contents.firstIndex(where: { $0.file == file }) {
+				self.vm.folder.contents[indexInContents].file = file
+			}
+		}
 	}
 }
