@@ -310,6 +310,7 @@
 				B1E325C12AB03AB1003BF87D /* Products */,
 				066881B1E40A0A51FA9C3107 /* Pods */,
 				331842078A715537327D0FD0 /* Frameworks */,
+				B153FA972AF45E0D0016E783 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -334,7 +335,6 @@
 				B1E325C92AB03AB1003BF87D /* Main.storyboard */,
 				B1E325CC2AB03AB1003BF87D /* Assets.xcassets */,
 				B1E325CE2AB03AB1003BF87D /* LaunchScreen.storyboard */,
-				B153FA972AF45E0D0016E783 /* README.md */,
 				B1E325D12AB03AB1003BF87D /* Info.plist */,
 			);
 			path = BackUploadsWithAws;
