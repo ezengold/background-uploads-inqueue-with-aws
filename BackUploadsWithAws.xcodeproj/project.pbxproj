@@ -93,6 +93,7 @@
 		B148C08D2AB3137D00048DCE /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
 		B148C0902AB31A3500048DCE /* FolderDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailsViewModel.swift; sourceTree = "<group>"; };
 		B148C0922AB31A4300048DCE /* FolderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailsView.swift; sourceTree = "<group>"; };
+		B153FA972AF45E0D0016E783 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B17E92392AB6F1ED00DF30FA /* FolderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailsViewController.swift; sourceTree = "<group>"; };
 		B19465532AB06F8A00860FF7 /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		B1B706312AB1FC0F008A1F35 /* ChatFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFile.swift; sourceTree = "<group>"; };
@@ -309,6 +310,7 @@
 				B1E325C12AB03AB1003BF87D /* Products */,
 				066881B1E40A0A51FA9C3107 /* Pods */,
 				331842078A715537327D0FD0 /* Frameworks */,
+				B153FA972AF45E0D0016E783 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
