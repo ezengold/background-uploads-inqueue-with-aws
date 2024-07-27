@@ -113,7 +113,7 @@ struct ChatsView: View {
 						Text(item.folderName)
 							.font(.appBoldFont(ofSize: 17))
 							.foregroundColor(.appPrincipal)
-						Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) asset\(item.contents.count > 1 ? "s" : "")")
+						Text(item.contents.isEmpty ? "No asset yet" : "\(item.contents.count) assets", comment: "Number of assets/files inside a chat")
 							.font(.appRegularFont(ofSize: 15))
 							.foregroundColor(.black)
 							.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)

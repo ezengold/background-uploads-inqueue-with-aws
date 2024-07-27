@@ -60,6 +60,7 @@
 		B1E325E52AB0421E003BF87D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E42AB0421E003BF87D /* Constants.swift */; };
 		B1E325E72AB0436B003BF87D /* UploadTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E62AB0436B003BF87D /* UploadTaskDelegate.swift */; };
 		B1E325E92AB0507B003BF87D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E325E82AB0507B003BF87D /* Extensions.swift */; };
+		B1ED9BD82B33A9EF00048D4F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1ED9BD72B33A9EF00048D4F /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 		B1E325E42AB0421E003BF87D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B1E325E62AB0436B003BF87D /* UploadTaskDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTaskDelegate.swift; sourceTree = "<group>"; };
 		B1E325E82AB0507B003BF87D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B1ED9BD72B33A9EF00048D4F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D80E558B846F212976AB7F19 /* Pods-BackUploadsWithAws.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackUploadsWithAws.debug.xcconfig"; path = "Target Support Files/Pods-BackUploadsWithAws/Pods-BackUploadsWithAws.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -336,6 +338,7 @@
 				B1E325CC2AB03AB1003BF87D /* Assets.xcassets */,
 				B1E325CE2AB03AB1003BF87D /* LaunchScreen.storyboard */,
 				B1E325D12AB03AB1003BF87D /* Info.plist */,
+				B1ED9BD72B33A9EF00048D4F /* Localizable.xcstrings */,
 			);
 			path = BackUploadsWithAws;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = B1E325B72AB03AB0003BF87D;
 			productRefGroup = B1E325C12AB03AB1003BF87D /* Products */;
@@ -453,6 +457,7 @@
 			files = (
 				B13D985A2AB86715007E106B /* dummy.pdf in Resources */,
 				B11D01992ADD91B000AA2029 /* dummy.jpeg in Resources */,
+				B1ED9BD82B33A9EF00048D4F /* Localizable.xcstrings in Resources */,
 				B1E325D02AB03AB1003BF87D /* LaunchScreen.storyboard in Resources */,
 				B1E325CD2AB03AB1003BF87D /* Assets.xcassets in Resources */,
 				B148370C2AB217FB007248BF /* OpenSans-Bold.ttf in Resources */,

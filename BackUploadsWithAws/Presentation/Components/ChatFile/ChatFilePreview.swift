@@ -22,7 +22,7 @@ struct ChatFilePreview: View {
 						.font(.appBoldFont(ofSize: 15))
 						.foregroundColor(.black)
 						.frame(maxWidth: .infinity, alignment: .leading)
-					Text("Added : \(file.addedAt.toString())")
+					Text("Added : \(file.addedAt.toString())", comment: "Date d'ajout du fichier")
 						.font(.appRegularFont(ofSize: 14))
 						.foregroundColor(.appDarkGray)
 						.frame(maxWidth: .infinity, alignment: .leading)
@@ -76,7 +76,7 @@ struct ChatFilePreview: View {
 							.scaledToFit()
 							.foregroundColor(.white)
 							.frame(width: 40, height: 40)
-						Text("Click here to open")
+						Text("Click here to open", comment: "The text on the preview file button")
 							.font(.appRegularFont(ofSize: 14))
 							.foregroundColor(.white)
 					}
