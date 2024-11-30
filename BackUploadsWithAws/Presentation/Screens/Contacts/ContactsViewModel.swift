@@ -68,9 +68,10 @@ class ContactsViewModel: ObservableObject {
 			if await updateContactsUseCase.execute() {
 				self.fetchAllData()
 				self.isLoading = false
-				print("Contacts fixed successfully ✅")
+				await self.host.alert(withTitle: "Contacts Sync", message: "Contacts fixed successfully ✅")
 			} else {
 				self.isLoading = false
+				await self.host.alert(withTitle: "Contacts Sync", message: "An error occured while synchronizing contacts ❌")
 			}
 		}
 	}
