@@ -34,14 +34,43 @@ class ContactsViewModel: ObservableObject {
 	}
 	
 	func isValid(_ contact: CNContact) -> Bool {
+		// case of numbers not already migrated
+		let _possiblyNotMigratedNumbers = contact.phoneNumbers.filter({
+			$0.value.stringValue.withoutSpaces().count == 8 ||
+			($0.value.stringValue.withoutSpaces().hasPrefix("+229") && $0.value.stringValue.withoutSpaces().count == 12) ||
+			($0.value.stringValue.withoutSpaces().hasPrefix("229") && $0.value.stringValue.withoutSpaces().count == 11) ||
+			($0.value.stringValue.withoutSpaces().hasPrefix("00229") && $0.value.stringValue.withoutSpaces().count == 13)
+		})
+		
+		var isCorrect = true
+		
+		for number in _possiblyNotMigratedNumbers {
+			let numberString = number.value.stringValue.withoutSpaces()
+			
+			var actualNumber: String = ""
+			
+			if numberString.count == 8 {
+				actualNumber = numberString
+			} else if numberString.hasPrefix("+229") && numberString.count == 12 {
+				actualNumber = String(numberString[numberString.index(numberString.startIndex, offsetBy: 4)...])
+			} else if numberString.hasPrefix("229") && numberString.count == 11 {
+				actualNumber = String(numberString[numberString.index(numberString.startIndex, offsetBy: 3)...])
+			} else if numberString.hasPrefix("00229") && numberString.count == 13 {
+				actualNumber = String(numberString[numberString.index(numberString.startIndex, offsetBy: 5)...])
+			}
+			
+			let isFixed = contact.phoneNumbers.contains(where: { $0.value.stringValue.withoutSpaces() == "+22901\(actualNumber)" })
+			
+			isCorrect = isCorrect && isFixed
+		}
+		
+		// case of numbers not fixed back by migration
 		let _numbers = contact.phoneNumbers.filter({
 			$0.value.stringValue.withoutSpaces().starts(with: "+22901") ||
 			$0.value.stringValue.withoutSpaces().starts(with: "01")
 		})
 		
 		guard _numbers.count > 0 else { return true }
-		
-		var isCorrect = true
 		
 		for number in _numbers {
 			let numberString = number.value.stringValue.withoutSpaces()

@@ -107,7 +107,7 @@ struct ContactsView: View {
 						ProgressView()
 							.progressViewStyle(CircularProgressViewStyle(tint: .white))
 					} else {
-						Text("FIX NUMBER")
+						Text("FIX NUMBERS")
 							.font(.appBoldFont(ofSize: 17))
 					}
 				}
