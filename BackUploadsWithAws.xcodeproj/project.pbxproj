@@ -42,6 +42,11 @@
 		B1B706342AB1FD39008A1F35 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B706332AB1FD39008A1F35 /* FileType.swift */; };
 		B1B706382AB206BA008A1F35 /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B706372AB206BA008A1F35 /* ChatsViewModel.swift */; };
 		B1B7063A2AB206CB008A1F35 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B706392AB206CB008A1F35 /* ChatsView.swift */; };
+		B1C3A80E2CFB30F70040EFA7 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3A80D2CFB30F10040EFA7 /* ContactsView.swift */; };
+		B1C3A8102CFB31020040EFA7 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3A80F2CFB30FC0040EFA7 /* ContactsViewModel.swift */; };
+		B1C3A8122CFB32170040EFA7 /* FetchContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3A8112CFB320C0040EFA7 /* FetchContacts.swift */; };
+		B1C3A8182CFB47070040EFA7 /* UpdateContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3A8172CFB46FB0040EFA7 /* UpdateContacts.swift */; };
+		B1C577762C55C30100B447A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C577752C55C30100B447A2 /* ViewController.swift */; };
 		B1CE9C052ADD579300DDE5C2 /* UpdateFolderContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CE9C042ADD579300DDE5C2 /* UpdateFolderContents.swift */; };
 		B1CE9C082ADD890800DDE5C2 /* ChatFileLoadingPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CE9C072ADD890800DDE5C2 /* ChatFileLoadingPreview.swift */; };
 		B1DFC9792AE7317D003CB677 /* ChatFilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DFC9782AE7317D003CB677 /* ChatFilePreview.swift */; };
@@ -101,6 +106,11 @@
 		B1B706332AB1FD39008A1F35 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		B1B706372AB206BA008A1F35 /* ChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewModel.swift; sourceTree = "<group>"; };
 		B1B706392AB206CB008A1F35 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
+		B1C3A80D2CFB30F10040EFA7 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		B1C3A80F2CFB30FC0040EFA7 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		B1C3A8112CFB320C0040EFA7 /* FetchContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchContacts.swift; sourceTree = "<group>"; };
+		B1C3A8172CFB46FB0040EFA7 /* UpdateContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContacts.swift; sourceTree = "<group>"; };
+		B1C577752C55C30100B447A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B1CE9C042ADD579300DDE5C2 /* UpdateFolderContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFolderContents.swift; sourceTree = "<group>"; };
 		B1CE9C072ADD890800DDE5C2 /* ChatFileLoadingPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFileLoadingPreview.swift; sourceTree = "<group>"; };
 		B1DFC9782AE7317D003CB677 /* ChatFilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilePreview.swift; sourceTree = "<group>"; };
@@ -192,6 +202,8 @@
 				B1DFC97A2AE749A7003CB677 /* UpdateAFile.swift */,
 				B1DFC97C2AE74E13003CB677 /* FetchFolderContents.swift */,
 				B12FFAEE2AF3325D006EA6D1 /* DeleteAnUploadFile.swift */,
+				B1C3A8112CFB320C0040EFA7 /* FetchContacts.swift */,
+				B1C3A8172CFB46FB0040EFA7 /* UpdateContacts.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -199,10 +211,12 @@
 		B148C0882AB3126D00048DCE /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B1C3A80C2CFB30E10040EFA7 /* Contacts */,
 				B1B706362AB206A3008A1F35 /* Chats */,
 				B148C08F2AB31A1300048DCE /* FolderDetails */,
 				B14162E22AB27FD70095E986 /* Ongoings */,
 				B13D98462AB846E8007E106B /* AssetsPreview */,
+				B1C577752C55C30100B447A2 /* ViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -294,6 +308,15 @@
 				B14837082AB217FB007248BF /* OpenSans-SemiBold.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B1C3A80C2CFB30E10040EFA7 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				B1C3A80D2CFB30F10040EFA7 /* ContactsView.swift */,
+				B1C3A80F2CFB30FC0040EFA7 /* ContactsViewModel.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		B1CE9C062ADD88D800DDE5C2 /* ChatFile */ = {
@@ -537,6 +560,7 @@
 				B1E325DE2AB03D0C003BF87D /* TaskStatus.swift in Sources */,
 				B148C0802AB2F97D00048DCE /* ChatFolderApi.swift in Sources */,
 				B1DFC97F2AE75AEE003CB677 /* EventNames.swift in Sources */,
+				B1C577762C55C30100B447A2 /* ViewController.swift in Sources */,
 				B1DFC9792AE7317D003CB677 /* ChatFilePreview.swift in Sources */,
 				B13D984A2AB84764007E106B /* AssetsPreviewView.swift in Sources */,
 				B14162E82AB2808C0095E986 /* Navigations.swift in Sources */,
@@ -552,12 +576,16 @@
 				B1CE9C082ADD890800DDE5C2 /* ChatFileLoadingPreview.swift in Sources */,
 				B13D984E2AB84F7B007E106B /* PreviewMini.swift in Sources */,
 				B13D98582AB862D6007E106B /* FilePreview.swift in Sources */,
+				B1C3A8122CFB32170040EFA7 /* FetchContacts.swift in Sources */,
 				B1E325E32AB03FB9003BF87D /* S3Keys.swift in Sources */,
 				B101E2452AB3C54600744539 /* Helpers.swift in Sources */,
 				B1DFC97B2AE749A7003CB677 /* UpdateAFile.swift in Sources */,
 				B148C0932AB31A4300048DCE /* FolderDetailsView.swift in Sources */,
+				B1C3A8182CFB47070040EFA7 /* UpdateContacts.swift in Sources */,
+				B1C3A80E2CFB30F70040EFA7 /* ContactsView.swift in Sources */,
 				B1B7063A2AB206CB008A1F35 /* ChatsView.swift in Sources */,
 				B10E621E2AB99D7C0093FB54 /* PreviewElement.swift in Sources */,
+				B1C3A8102CFB31020040EFA7 /* ContactsViewModel.swift in Sources */,
 				B1E325E52AB0421E003BF87D /* Constants.swift in Sources */,
 				B1B706322AB1FC0F008A1F35 /* ChatFile.swift in Sources */,
 			);
@@ -712,6 +740,7 @@
 				INFOPLIST_FILE = BackUploadsWithAws/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Backs Up";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please let BackUploadsWithAws access your camera for better usage experience";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Please let BackUploadsWithAws access your contacts for better usage experience";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please let BackUploadsWithAws access your microphone for better usage experience";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please let BackUploadsWithAws access your photo library for better usage experience";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -751,6 +780,7 @@
 				INFOPLIST_FILE = BackUploadsWithAws/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Backs Up";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please let BackUploadsWithAws access your camera for better usage experience";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Please let BackUploadsWithAws access your contacts for better usage experience";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please let BackUploadsWithAws access your microphone for better usage experience";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please let BackUploadsWithAws access your photo library for better usage experience";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

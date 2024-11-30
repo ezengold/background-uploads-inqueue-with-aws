@@ -83,6 +83,7 @@ class ChatsViewController: UIViewController {
 		searchItem.tintColor = UIColor.black
 		
 		self.navigationItem.rightBarButtonItems = [
+			UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(openContacts)),
 			UIBarButtonItem(customView: uploadsIcon),
 			searchItem
 		]
@@ -98,6 +99,11 @@ class ChatsViewController: UIViewController {
 	func onViewUploads() {
 
 		self.showOngoingUploads()
+	}
+	
+	@objc
+	func openContacts() {
+		self.showContactsView()
 	}
 }
 

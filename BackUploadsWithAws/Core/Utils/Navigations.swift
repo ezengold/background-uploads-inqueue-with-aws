@@ -32,4 +32,10 @@ extension UIViewController {
 		vc.modalPresentationStyle = .fullScreen
 		self.present(vc, animated: true)
 	}
+	
+	func showContactsView() {
+		lazy var vc = ContactsViewController()
+		vc.view.backgroundColor = .white
+		self.navigationController?.pushViewController(vc, animated: true)
+	}
 }
