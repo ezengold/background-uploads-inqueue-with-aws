@@ -66,11 +66,11 @@ class FolderDetailsViewController: UIViewController {
 			image: UIImage(systemName: "doc.badge.plus"),
 			primaryAction: nil,
 			menu: UIMenu(
-				title: "Add a new asset",
+				title: String(localized: "Add a new asset"),
 				children: [
-					UIAction(title: "Image", image: UIImage(named: "image-icon"), handler: self.pickImages),
-					UIAction(title: "Video", image: UIImage(named: "video-icon"), handler: self.pickVideos),
-					UIAction(title: "File", image: UIImage(systemName: "doc"), handler: self.pickFiles),
+					UIAction(title: String(localized: "Image"), image: UIImage(named: "image-icon"), handler: self.pickImages),
+					UIAction(title: String(localized: "Video"), image: UIImage(named: "video-icon"), handler: self.pickVideos),
+					UIAction(title: String(localized: "File"), image: UIImage(systemName: "doc"), handler: self.pickFiles),
 				]
 			)
 		)

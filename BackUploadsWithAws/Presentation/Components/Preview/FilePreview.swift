@@ -51,7 +51,7 @@ struct FilePreview: View {
 	
     var body: some View {
 		VStack {
-			Text("Slide to Left or Right to see more files")
+			Text("Slide to Left or Right to see more files", comment: "Message shown at the top of the file previewer")
 				.font(.appRegularFont(ofSize: 14))
 				.foregroundColor(.gray)
 				.padding(.vertical, 5)

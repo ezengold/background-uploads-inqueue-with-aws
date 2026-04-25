@@ -99,7 +99,7 @@ struct AssetsPreviewView: View {
 							.scaledToFit()
 							.foregroundColor(.appDarkGray)
 							.frame(width: 15, height: 15)
-						Text("Annuler")
+						Text("Cancel", comment: "Text displayed on cancel button in the assets preview screen")
 							.font(.appRegularFont(ofSize: 16))
 							.foregroundColor(.appDarkGray)
 					}
@@ -108,7 +108,7 @@ struct AssetsPreviewView: View {
 				Button {
 					vm.handleSubmit()
 				} label: {
-					Text("Envoyer")
+					Text("Send", comment: "Text displayed on send button in the asets preview screen")
 						.font(.appBoldFont(ofSize: 16))
 						.frame(height: 40, alignment: .center)
 						.foregroundColor(Color.white)
